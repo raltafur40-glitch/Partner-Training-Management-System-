@@ -1,0 +1,4242 @@
+{
+  "name": "WF-01 Parent Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA",
+          "mode": "list",
+          "cachedResultName": "Partner Training Request Form Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 201046369,
+          "mode": "list",
+          "cachedResultName": "Partner Registry",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit#gid=201046369"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9b763973-c41f-4d09-bd2c-29f918da770f",
+      "name": "01 - Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "1btNjySfkRsCs17f",
+          "name": "Google Sheets Trigger OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7af80dd5-8290-4869-90da-d8fd71560ead",
+              "name": "companyName",
+              "value": "={{ $json[\"Company Name\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "f438c6c1-2802-4e85-bf12-f5745a7fe6bb",
+              "name": "contactName",
+              "value": "={{ $json[\"Contact Full Name\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "804b5537-52b6-40c2-bcbf-f0c5c3011c2c",
+              "name": "email",
+              "value": "={{ $json[\"Business Email\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "ed124bd4-281f-44c8-92ca-92bfe833590d",
+              "name": "jobTitle",
+              "value": "={{ $json[\"Job Title\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "c876b166-eea4-4689-9321-ffa62f2d1564",
+              "name": "country",
+              "value": "={{ $json.Country }}",
+              "type": "string"
+            },
+            {
+              "id": "c76a320e-60bd-40ae-b6ca-51546cf634c9",
+              "name": "phoneNumber",
+              "value": "={{ $json[\"Phone Number\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d577bb83-dfea-4809-a07d-5aeba7c38612",
+              "name": "trainingProgram",
+              "value": "={{ $json[\"Training Program\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d277b099-8e14-4e83-8225-f3791d3ccfa2",
+              "name": "preferredTrainingTime",
+              "value": "={{ $json[\"Preferred Training Time\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "7bd309f7-875c-441e-a494-42a861f306b4",
+              "name": "notes",
+              "value": "={{ $json[\"Additional Notes\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "29f53a49-cfa4-4040-8074-be3eabd0eb69",
+              "name": "cvFile",
+              "value": "={{ $json[\"Upload CV\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "191f698e-2446-4179-8ef2-5b91f27276f5",
+              "name": "ndaFile",
+              "value": "={{ $json[\"Upload NDA\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "3f3b1fff-034a-4cda-91a5-f0ec99e2ec04",
+              "name": "otherDocuments",
+              "value": "={{ $json[\"Upload Other Documents\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "64c8897a-8eee-4286-8b50-8b6565831370",
+              "name": "workflowVersion",
+              "value": "1.0",
+              "type": "string"
+            },
+            {
+              "id": "7cff7b96-4363-46b6-b860-d3da7687b01d",
+              "name": "lifecycleStage",
+              "value": "Registered",
+              "type": "string"
+            },
+            {
+              "id": "56944f21-5eed-4da4-abe6-4262549f4d9d",
+              "name": "validationStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "712a4541-679f-477c-a7a8-e6351dec3ae6",
+              "name": "crmStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "d4a37174-70c1-496e-a0da-f5e9ca91896a",
+              "name": "folderStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "28675bc7-ecba-4475-88a9-99b3bc96a86d",
+              "name": "attachmentStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "cbb81448-47bc-43fb-933f-0761ca8930ab",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "1a5e5e7f-f5d8-4edf-8251-a911d6b77594",
+              "name": "notionStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "e6c316d6-336b-4a85-8620-078c22e5089f",
+              "name": "overallStatus",
+              "value": "Processing",
+              "type": "string"
+            },
+            {
+              "id": "fd03d7bf-7b83-4a97-978b-fc00b25a5cd3",
+              "name": "processingStartedAt",
+              "value": "={{$now}}",
+              "type": "string"
+            },
+            {
+              "id": "0d643346-ab05-4986-9836-b844f414beec",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        192,
+        0
+      ],
+      "id": "cfdb9d20-be7c-4081-9b87-685510c2ff5a",
+      "name": "02 - Normalize Partner Data"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n\nconst errors = [];\n\n// Company\nif (!item.json.companyName?.trim()) {\n  errors.push(\"Company Name is missing\");\n}\n\n// Contact Name\nif (!item.json.contactName?.trim()) {\n  errors.push(\"Contact Name is missing\");\n}\n\n// Email\nif (!item.json.email?.trim()) {\n  errors.push(\"Business Email is missing\");\n}\nelse if (!emailRegex.test(item.json.email)) {\n  errors.push(\"Business Email format is invalid\");\n}\n\n// Training\nconst validCourses = [\n  \"Product Basics\",\n  \"CMS Fundamentals\",\n  \"API Integration\",\n  \"Experimentation\",\n  \"Commerce Platform\"\n];\n\nif (!validCourses.includes(item.json.trainingProgram)) {\n  errors.push(\"Invalid Training Program\");\n}\n\n// Country\nif (!item.json.country?.trim()) {\n  errors.push(\"Country is missing\");\n}\n\n// Final Result\nitem.json.validationPassed = errors.length === 0;\nitem.json.validationErrors = errors;\nitem.json.validationStatus = errors.length === 0 ? \"Passed\" : \"Failed\";\n\nreturn item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -112
+      ],
+      "id": "a46a4bd1-3c83-40cb-827e-3fc04b85013d",
+      "name": "03 - Validation Engine"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "search",
+        "limit": 1,
+        "filterGroupsUi": {
+          "filterGroupsValues": [
+            {
+              "filtersUi": {
+                "filterValues": [
+                  {
+                    "propertyName": "email|string",
+                    "value": "={{ $('02 - Normalize Partner Data').item.json.email }}"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        64
+      ],
+      "id": "9423a631-a104-4b47-9ee1-9be2dc83c5f7",
+      "name": "04 - Search Existing Contact",
+      "alwaysOutputData": true,
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "I2CyLdSDg8w6kjmD",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Was the validation successful?\nconst validationPassed = item.json.validationPassed;\n\n// Did HubSpot return an existing contact?\nconst hubspotExists = !!item.json.id;\n\n// Decide what should happen next.\nlet action = \"\";\nlet reason = \"\";\n\nif (!validationPassed) {\n  action = \"STOP\";\n  reason = \"Validation Failed\";\n} else if (hubspotExists) {\n  action = \"UPDATE_CONTACT\";\n  reason = \"Existing HubSpot Contact\";\n} else {\n  action = \"CREATE_CONTACT\";\n  reason = \"New Partner\";\n}\n\nitem.json.nextAction = action;\nitem.json.decisionReason = reason;\n\nreturn item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        -272
+      ],
+      "id": "c2789d20-2388-44cd-a27a-a352bc7a9c8d",
+      "name": "05 - Decision Engine"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.contactFullName }}",
+        "limit": 1,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1040,
+        -272
+      ],
+      "id": "daeffc65-b921-4a30-a397-2baf3e4e1e4f",
+      "name": "06 - Search Contact Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "224746b9-b391-4dda-b690-707c57d8cc56",
+              "name": "hubspotExists",
+              "value": "={{ $items(\"04 - Search Existing Contact\").length > 0 }}",
+              "type": "string"
+            },
+            {
+              "id": "d32002be-e6ad-40c6-a82f-eb9f1514dcc3",
+              "name": "driveFolderExists",
+              "value": "={{ $items(\"06 - Search Contact Folder\").length > 0 }}",
+              "type": "string"
+            },
+            {
+              "id": "e27e0179-f42a-4d54-8a6a-f69d44eeca17",
+              "name": "validationPassed",
+              "value": "={{ $json.validationPassed }}",
+              "type": "string"
+            },
+            {
+              "id": "d292bab0-5fa7-4d5a-88ad-ec550eff49e3",
+              "name": "email",
+              "value": "={{ $json.businessEmail }}",
+              "type": "string"
+            },
+            {
+              "id": "3f6afdc7-7a76-4c66-bcaf-56d84060feb6",
+              "name": "comapny",
+              "value": "={{ $json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "72eb30c5-1b29-48db-82ee-31301e509555",
+              "name": "partnerName",
+              "value": "={{ $json.contactFullName }}",
+              "type": "string"
+            },
+            {
+              "id": "ad9a6678-e4c2-4fa1-acab-67ab0bb9167f",
+              "name": "duplicateStatus",
+              "value": "={{ $items(\"04 - Search Existing Contact\").length > 0 ? \"Existing Partner\" : \"New Partner\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -272
+      ],
+      "id": "81fc1f34-c76a-4b01-9527-ba2940f18c07",
+      "name": "07 - Duplicate Summary"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        432,
+        -272
+      ],
+      "id": "209b6cd2-9d97-42c0-8619-4a77e169bc79",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "dNAfFODCyxhdLd5P",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/dNAfFODCyxhdLd5P",
+          "cachedResultName": "WF-02 HubSpot Service"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            ""
+          ],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        -272
+      ],
+      "id": "5045f19d-9449-4eb9-97e5-911308a2a2b8",
+      "name": "Call 'WF-02 HubSpot Service'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ba2a5521-a54e-4b31-bc7c-24c308d8716c",
+              "name": "hubspotContactId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b814c262-ff2d-4cf2-b4f0-14183043bc06",
+              "name": "crmStatus",
+              "value": "Success",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        -272
+      ],
+      "id": "eff7ec5a-4e39-4ebf-89dc-7e0429f92acf",
+      "name": "06 - Return Response"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1472,
+        64
+      ],
+      "id": "5a27cc04-20f8-4a9a-b848-5674dd5aa494",
+      "name": "07 - Merge CRM Result"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "036d46f5-4f80-45e6-b488-c48844fc5279",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        848,
+        64
+      ],
+      "id": "d7791690-ed85-4ecc-b5b9-debd7a492b4d",
+      "name": "05 - Contact Exists?"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "={{ $('02 - Normalize Partner Data').item.json.email }}",
+        "additionalFields": {
+          "companyName": "={{ $('02 - Normalize Partner Data').item.json.companyName }}",
+          "country": "={{ $('02 - Normalize Partner Data').item.json.Country }}",
+          "firstName": "={{ $('02 - Normalize Partner Data').item.json.contactName }}",
+          "jobTitle": "={{ $('02 - Normalize Partner Data').item.json.jobTitle }}",
+          "phoneNumber": "={{ $('02 - Normalize Partner Data').item.json['Phone Number'] }}",
+          "workEmail": "={{ $('02 - Normalize Partner Data').item.json.email }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        1232,
+        -48
+      ],
+      "id": "3a7bb1e9-63f2-49a9-9a5b-bdec4b7c5228",
+      "name": "06A - Update Contact",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "I2CyLdSDg8w6kjmD",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "={{ $('02 - Normalize Partner Data').item.json.email }}",
+        "additionalFields": {
+          "companyName": "={{ $('02 - Normalize Partner Data').item.json.companyName }}",
+          "country": "={{ $('02 - Normalize Partner Data').item.json.Country }}",
+          "firstName": "={{ $('02 - Normalize Partner Data').item.json.contactName }}",
+          "jobTitle": "={{ $('02 - Normalize Partner Data').item.json.jobTitle }}",
+          "phoneNumber": "={{ $('02 - Normalize Partner Data').item.json['Phone Number'] }}",
+          "workEmail": "={{ $('02 - Normalize Partner Data').item.json.email }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        224
+      ],
+      "id": "fd478f6c-48ce-46bb-b2b7-b6c15f7f7412",
+      "name": "06B - Create Contact",
+      "alwaysOutputData": true,
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "I2CyLdSDg8w6kjmD",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d0d5d570-625d-46e3-9978-fbf6c2ea3378",
+              "name": "crmStatus",
+              "value": "Success",
+              "type": "string"
+            },
+            {
+              "id": "8445c710-1788-4936-9512-1cd437e26526",
+              "name": "crmStatus",
+              "value": "Updated",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        -160
+      ],
+      "id": "92a086c6-7fcb-4e46-ab8f-1b890d93a071",
+      "name": "06A.1 - Set CRM Action"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8651e03e-2321-4d4e-b00a-b342aaffb7e6",
+              "name": "crmStatus",
+              "value": "Created",
+              "type": "string"
+            },
+            {
+              "id": "09589ac9-d523-4f0b-a5b3-ea3a219a4ee5",
+              "name": "crmStatus",
+              "value": "Success",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        272
+      ],
+      "id": "815d36b6-b922-42b1-83a4-79cced70b3ee",
+      "name": "06B.1 - Set CRM Action"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('02 - Normalize Partner Data').item.json.companyName }}",
+        "limit": 1,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "12uxZSgBx3vYZCIJDMh3CJ2wwVfV5gQ2j",
+            "mode": "list",
+            "cachedResultName": "Partner Training Portal",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/12uxZSgBx3vYZCIJDMh3CJ2wwVfV5gQ2j"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1680,
+        64
+      ],
+      "id": "b880d35e-e563-4027-ab8e-cfd2caf7760a",
+      "name": "08 - Search Company Folder",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1e9336f1-2b57-4611-8f85-ddcd5f2a64c6",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1888,
+        64
+      ],
+      "id": "614e59d1-42c5-4162-ac79-6ed661f0bf65",
+      "name": "09 - Company Folder Exists?"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('02 - Normalize Partner Data').item.json.companyName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "12uxZSgBx3vYZCIJDMh3CJ2wwVfV5gQ2j",
+          "mode": "list",
+          "cachedResultName": "Partner Training Portal",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/12uxZSgBx3vYZCIJDMh3CJ2wwVfV5gQ2j"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2096,
+        192
+      ],
+      "id": "0065f128-16cc-4668-bbb6-b2ca0233994f",
+      "name": "10B - Create Company Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2304,
+        160
+      ],
+      "id": "95604f59-5e56-4f09-8e5d-2f0b38567649",
+      "name": "11 - Merge Company Folder"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8fe7ea7-32b0-49b9-9759-9ad09c778cd2",
+              "name": "companyFolderID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6157242b-102d-4ed7-a6e1-1ff6baf07113",
+              "name": "companyFolderName",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1ffbec2e-9876-4e4e-bdd7-3c3195c07c3e",
+              "name": "contactName",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.contactName }}",
+              "type": "string"
+            },
+            {
+              "id": "eac0bebe-9196-4f17-abbc-6a46c85fb266",
+              "name": "companyName",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "fba85f85-6bb8-4d86-9281-f977d5691665",
+              "name": "email",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "bc1df84e-ade1-41fd-95ef-fd40e66ccbd3",
+              "name": "trainingProgram",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2512,
+        160
+      ],
+      "id": "d6777847-8bd2-40dc-822f-275f5c39f6b4",
+      "name": "11A - Prepare Drive Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "23d7926c-5ed4-4fec-a97b-4b73872bcee4",
+              "name": "folders",
+              "value": "={{\n[\n  \"01_CV\",\n  \"02_NDA\",\n  \"03_Other_Documents\",\n  \"04_Training_Materials\",\n  \"05_Certificates\",\n  \"06_Assessments\",\n  \"07_Meeting_Notes\",\n  \"08_Communication\",\n  \"09_Archive\"\n]\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        -480
+      ],
+      "id": "9ff17a3d-4fb6-42e3-958e-20fc873e4e3f",
+      "name": "13 - Prepare Folder List"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{  $('02 - Normalize Partner Data').first().json.contactName + \"_\" + $now.format(\"yyyyMMdd\") + \"_\" + String($execution.id).padStart(3,'0') }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.companyFolderID }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2720,
+        160
+      ],
+      "id": "6b982348-c4e4-4301-a028-58226d27f6af",
+      "name": "12 - Create Contact Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "02_NDA",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3360,
+        -256
+      ],
+      "id": "144b549c-038e-4fc0-8a0b-cc2ab88d5661",
+      "name": "13.02 - Create NDA Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "03_Other_Documents",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3600,
+        -240
+      ],
+      "id": "3a755b41-2c1f-4218-9181-c30e5d8b819a",
+      "name": "13.03 - Create Other Documents Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "04_Training_Materials",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3856,
+        -224
+      ],
+      "id": "f270f441-ad75-4d8f-bef8-ce85c36fcba7",
+      "name": "13.04 - Create Training Materials Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "05_Certificates",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4112,
+        -208
+      ],
+      "id": "410880f2-fe18-49f2-9375-859272ee62e6",
+      "name": "13.05 - Create Certificates Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "06_Assessments",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3040,
+        256
+      ],
+      "id": "b7babb05-959a-4d52-b460-b973a3111cb0",
+      "name": "13.06 - Create Assessments Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "07_Meeting_Notes",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3184,
+        400
+      ],
+      "id": "67711216-8d79-42a1-ab35-0e70c2e8e03e",
+      "name": "13.07 - Create Meeting Notes Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "08_Communication",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3408,
+        352
+      ],
+      "id": "8b7b6267-ba74-4d23-acb4-2e412e0ff4ea",
+      "name": "13.08 - Create Communication Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "09_Archive",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3632,
+        400
+      ],
+      "id": "516a424b-a571-4bd0-887a-441848d0716c",
+      "name": "13.09 - Create Archive Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "01_CV",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('12 - Create Contact Folder').first().json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        -208
+      ],
+      "id": "ee91aa9f-c6f6-4d29-9fea-72bcd5249dcc",
+      "name": "13.01 - Create CV Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82ed5264-4a0b-4d11-b720-7ba92579dd31",
+              "name": "cvFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.cvFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "b03ce5a7-0e96-4e67-8456-79404dab6d17",
+              "name": "ndaFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.ndaFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "a1606c3d-778b-4494-be49-1fcb7c4da865",
+              "name": "otherFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.otherDocuments .split(\"id=\")[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2992,
+        -448
+      ],
+      "id": "c72315fb-ecf0-4601-b50b-6615e8de7729",
+      "name": "13.01A - Extract Attachment IDs"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.cvFileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3184,
+        -464
+      ],
+      "id": "b3208f0b-a136-4f45-a388-8e6bd797e603",
+      "name": "13.01B - Download CV File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $binary.data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('13.01 - Create CV Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3392,
+        -464
+      ],
+      "id": "afcef169-0eeb-4914-ab93-9f4301d84131",
+      "name": "13.01C - Upload CV",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $binary.data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('13.02 - Create NDA Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4048,
+        -464
+      ],
+      "id": "5d9d2918-0ec0-41c3-aeed-a0d698ebf190",
+      "name": "13.02C - Upload NDA",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.ndaFileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3840,
+        -464
+      ],
+      "id": "440dc459-2afa-487b-bd47-48ba89e30d65",
+      "name": "13.02B - Download NDA File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82ed5264-4a0b-4d11-b720-7ba92579dd31",
+              "name": "cvFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.cvFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "b03ce5a7-0e96-4e67-8456-79404dab6d17",
+              "name": "ndaFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.ndaFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "a1606c3d-778b-4494-be49-1fcb7c4da865",
+              "name": "otherFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.otherDocuments .split(\"id=\")[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3632,
+        -464
+      ],
+      "id": "2b04835a-5fad-4eb1-8909-06bcb3c5bb95",
+      "name": "13.02A - Extract Attachment IDs"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82ed5264-4a0b-4d11-b720-7ba92579dd31",
+              "name": "cvFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.cvFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "b03ce5a7-0e96-4e67-8456-79404dab6d17",
+              "name": "ndaFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.ndaFile .split(\"id=\")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "a1606c3d-778b-4494-be49-1fcb7c4da865",
+              "name": "otherFileId",
+              "value": "={{ $('02 - Normalize Partner Data') .first() .json.otherDocuments .split(\"id=\")[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4016,
+        384
+      ],
+      "id": "6185c5c4-1576-4d19-b097-00023f75d119",
+      "name": "13.03A - Extract Attachment IDs"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.otherFileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4208,
+        416
+      ],
+      "id": "286ef4be-ccd8-4043-a3bf-bf90e2392b6a",
+      "name": "13.03B - Download Other Documents File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $binary.data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('13.03 - Create Other Documents Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4352,
+        384
+      ],
+      "id": "7d24a2bc-a5e0-4086-ab9b-4cae42800e90",
+      "name": "13.03C - Upload Other Documents",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        4480,
+        80
+      ],
+      "id": "343c98b1-1619-43ac-ae71-b3090f35c293",
+      "name": "14 - Wait For All Uploads"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7013a6ad-7d1a-44b5-a98b-7f1e25517f98",
+              "name": "companyFolderId",
+              "value": "={{ $('11 - Merge Company Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6ab6912e-62ed-4080-8b09-b8d8c0f39cbc",
+              "name": "companyFolderUrl",
+              "value": "={{ \"https://drive.google.com/drive/folders/\" + $('11 - Merge Company Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "bcbf9b50-5789-4523-8aba-f09838bf7e23",
+              "name": "contactFolderId",
+              "value": "={{ $('12 - Create Contact Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "bd9d477f-8038-465a-88d2-a5099d796202",
+              "name": "contactFolderUrl",
+              "value": "={{ \"https://drive.google.com/drive/folders/\" + $('12 - Create Contact Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "03614efe-26ea-4115-8705-7a616d2c90bd",
+              "name": "cvFolderId",
+              "value": "={{ $('13.01 - Create CV Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "aa2bd3bb-cb67-40e1-b01a-f61a508ef056",
+              "name": "ndaFolderId",
+              "value": "={{ $('13.02 - Create NDA Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "20268e34-e5af-42ef-bc52-8de7ce32efce",
+              "name": "otherDocumentsFolderId",
+              "value": "={{ $('13.03 - Create Other Documents Folder').first().json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "78ad889a-65cb-4d89-ab41-534602cab9df",
+              "name": "folderStatus",
+              "value": "Completed",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4688,
+        80
+      ],
+      "id": "8e4f93a9-29f3-4f61-9a4c-85883168b8fd",
+      "name": "15 - Prepare Drive Metadata"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [items[0]];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4864,
+        64
+      ],
+      "id": "fe73c7ea-1585-4071-8678-b993fb79df99",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+                    "rightValue": "=Commerce Platform",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "cd97b4c6-351c-4be6-8175-6d34acace36b"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Commerce Platform"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ed595167-6909-4742-b89d-91af4dd37949",
+                    "leftValue": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+                    "rightValue": "Product Basics",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Product Basics"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3454a646-7310-4c25-af1e-1e65bcc7ee16",
+                    "leftValue": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+                    "rightValue": "CMS Training",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CMS Training"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7b6b1a8a-a6c8-4a5c-bc9b-dd02bdb97799",
+                    "leftValue": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+                    "rightValue": "Experimentation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Experimentation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "937fe40e-7e96-49af-86e1-45a8845d6d70",
+                    "leftValue": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+                    "rightValue": "API Integration",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "API Integration"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        5072,
+        64
+      ],
+      "id": "0fe744cf-56a8-42a4-8e50-c1ec860b06d1",
+      "name": "16 - Route Training Program"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "663f7836-7b03-4132-b224-f483058b3ea2",
+              "name": "programName",
+              "value": "Commerce Platform",
+              "type": "string"
+            },
+            {
+              "id": "7e3d38f8-cfd4-40f1-8e6c-abc724ac74e2",
+              "name": "programCode",
+              "value": "CP",
+              "type": "string"
+            },
+            {
+              "id": "13cbc15d-f80a-42b3-99a5-47dd77bb8e30",
+              "name": "welcomeTemplate",
+              "value": "welcome_commerce_platform",
+              "type": "string"
+            },
+            {
+              "id": "88806dc1-57dc-4c59-a960-52664be87ecd",
+              "name": "managerName",
+              "value": "Commerce Platform Manager",
+              "type": "string"
+            },
+            {
+              "id": "d6311214-1882-4763-925b-082c37f4fd92",
+              "name": "managerEmail",
+              "value": "commerce.manager@example.com",
+              "type": "string"
+            },
+            {
+              "id": "a2dac9b6-a0a9-4b87-9a4d-3c27948ee3eb",
+              "name": "trainingFolder",
+              "value": "Commerce Platform",
+              "type": "string"
+            },
+            {
+              "id": "11d2bf12-cb1c-44c7-a5aa-3972a47dd0a9",
+              "name": "certificateTemplate",
+              "value": "Commerce Platform Certificate",
+              "type": "string"
+            },
+            {
+              "id": "0f585d86-c337-4af2-8ef2-dd8c72246376",
+              "name": "emailSubject",
+              "value": "Welcome to the Commerce Platform Training Program",
+              "type": "string"
+            },
+            {
+              "id": "3f108908-a5c7-4c23-9b7b-b27c6526b120",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "57227884-38a6-4453-bcf2-e5bde3fcfeec",
+              "name": "branchStatus",
+              "value": "Configured",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5296,
+        -160
+      ],
+      "id": "913272a8-2ed5-42f6-8d63-71e7232e4d43",
+      "name": "17 - Configure Commerce Platform"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ca12bf2-c0f5-45b6-ae5f-1a928930be37",
+              "name": "managerName",
+              "value": "Sarah Ahmed",
+              "type": "string"
+            },
+            {
+              "id": "30549c7a-d5df-48a3-b94d-3a11d540859d",
+              "name": "managerEmail",
+              "value": "sarah.ahmed@yourcompany.com",
+              "type": "string"
+            },
+            {
+              "id": "35f60f4d-77a5-4f5e-896e-19adede3d70d",
+              "name": "managerDepartment",
+              "value": "Partner Enablement",
+              "type": "string"
+            },
+            {
+              "id": "34fa6f10-3af0-41cd-8307-7512006e771a",
+              "name": "managerRole",
+              "value": "Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "4985f2d1-e541-45d4-9dfa-2ba9d44df5a7",
+              "name": "meetingDuration",
+              "value": "60 Minutes",
+              "type": "string"
+            },
+            {
+              "id": "5d52abb0-ede6-40a8-82cd-b502321517c7",
+              "name": "meetingMode",
+              "value": "Google Meet",
+              "type": "string"
+            },
+            {
+              "id": "004efdde-e696-4942-bba4-cddf3a27d2d2",
+              "name": "responseSLA",
+              "value": "24 Hours",
+              "type": "string"
+            },
+            {
+              "id": "8ff65555-aafe-45a5-8733-cd6f140999bb",
+              "name": "managerAssigned",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5504,
+        -160
+      ],
+      "id": "e38db401-8f26-4021-aa91-bda0b9f7afb3",
+      "name": "18 - Assign Manager"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2ff3fe-920f-4782-8406-cbf78c4ab52a",
+              "name": "trainingPortal",
+              "value": "https://academy.optimizely.com",
+              "type": "string"
+            },
+            {
+              "id": "a796ad4b-a5d3-47d9-bc16-6e65e63d0855",
+              "name": "trainingGuide",
+              "value": "Commerce Platform Onboarding Guide.pdf",
+              "type": "string"
+            },
+            {
+              "id": "c6ea2f08-604b-45f9-9cf2-e35164f2b56f",
+              "name": "assesmentType",
+              "value": "Knowledge Assessment",
+              "type": "string"
+            },
+            {
+              "id": "4da7b1b2-76db-4b3f-9301-d0bcf4eaf856",
+              "name": "assessmentDueDays",
+              "value": "7",
+              "type": "string"
+            },
+            {
+              "id": "9906fa83-5399-4465-8827-7e606061b642",
+              "name": "certificateEligible",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "0c894481-53f2-4751-94a6-60b1cde92b4a",
+              "name": "supportEmail",
+              "value": "partner.enablement@example.com",
+              "type": "string"
+            },
+            {
+              "id": "6db650cc-68c0-4972-b2b4-d66c6e67099b",
+              "name": "resourceStatus",
+              "value": "Assigned",
+              "type": "string"
+            },
+            {
+              "id": "6a8f1bcc-333b-401b-a58a-ad00c22aed59",
+              "name": "managerEmail",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5712,
+        -160
+      ],
+      "id": "75546e25-9129-4a7b-b493-dab31e40f095",
+      "name": "19 - Assign Training Resources"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a6a96c8-d384-42f4-bb7b-002c83105921",
+              "name": "emailTo",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "34c66f21-489b-4644-a744-af34fc0cc758",
+              "name": "emailCC",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            },
+            {
+              "id": "d7757119-b12d-46b6-bc5c-969bb6518507",
+              "name": "emailSubject",
+              "value": "={{ \"Welcome to the \" + $json.programName + \" Training Program\" }}",
+              "type": "string"
+            },
+            {
+              "id": "043de81a-abb7-4697-aa96-148c008b3542",
+              "name": "partnerName",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.contactName }}",
+              "type": "string"
+            },
+            {
+              "id": "ef3c2793-775a-4a26-8f6f-601d94a049bf",
+              "name": "companyName",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "af2543e5-8869-4fa3-b89e-35539c104b85",
+              "name": "trainingProgram",
+              "value": "={{ $('02 - Normalize Partner Data').first().json.trainingProgram }}",
+              "type": "string"
+            },
+            {
+              "id": "4cde6a8b-5afb-4ce4-b8bc-d61728e63e78",
+              "name": "emailGenerated",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "784947cb-d40c-4a87-a9c0-d5b7f650f408",
+              "name": "emailGeneratedAt",
+              "value": "={{ $now }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5920,
+        -160
+      ],
+      "id": "51ddc8fb-2e58-424c-aa96-2a874f8d1f9f",
+      "name": "20 - Generate Welcome Email Data"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.emailTo }}",
+        "subject": "={{ $json.emailSubject }}",
+        "message": "=<html>   <body style=\"font-family: Arial, sans-serif; line-height:1.6;\">     <h2>Welcome to the {{ $json.trainingProgram }} Training Program!</h2>      <p>Dear {{ $json.partnerName }},</p>      <p>       Thank you for registering on behalf of       <strong>{{ $json.companyName }}</strong>.     </p>      <p>       We are pleased to welcome you to the       <strong>{{ $json.trainingProgram }}</strong> training program.     </p>      <hr>      <h3>Your Assigned Training Manager</h3>      <p>       <strong>{{ $('18 - Assign Manager').item.json.managerName }}</strong><br>       {{ $('18 - Assign Manager').item.json.managerDepartment }}<br>       {{ $('19 - Assign Training Resources').item.json.managerEmail }}     </p>      <hr>      <h3>Training Information</h3>      <ul>       <li><strong>Training Portal:</strong> {{ $('19 - Assign Training Resources').item.json.trainingPortal }}</li>       <li><strong>Assessment:</strong> {{ $('19 - Assign Training Resources').item.json.assesmentType }}</li>       <li><strong>Assessment Due:</strong> {{ $('19 - Assign Training Resources').item.json.assessmentDueDays }} days</li>     </ul>      <p>       If you need any assistance, please contact:       <strong>{{ $('19 - Assign Training Resources').item.json.supportEmail }}</strong>     </p>      <br>      <p>       Best Regards,<br>       Partner Enablement Team     </p>   </body> </html>",
+        "options": {
+          "ccList": "={{ $json.emailCC }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        6112,
+        -160
+      ],
+      "id": "087cb63d-b955-4033-b1c0-4105bf284322",
+      "name": "21 -  Send Welcome Mail",
+      "webhookId": "69ae2c42-8ce6-4f4f-a7a0-1e2c7cc81ed0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('17 - Configure Commerce Platform').item.json.managerEmail }}",
+        "subject": "={{ \"New Partner Assigned - \" + $json.partnerName }}",
+        "message": "=<html> <body style=\"font-family:Arial,sans-serif\">  <h2>New Partner Registration</h2>  <p>A new partner has been successfully onboarded.</p>  <table border=\"1\" cellpadding=\"6\" cellspacing=\"0\">  <tr> <td><b>Name</b></td> <td>{{ $('20 - Generate Welcome Email Data').item.json.partnerName }}</td> </tr>  <tr> <td><b>Company</b></td> <td>{{ $('20 - Generate Welcome Email Data').item.json.companyName }}</td> </tr>  <tr> <td><b>Email</b></td> <td>{{ $('20 - Generate Welcome Email Data').item.json.emailTo }}</td> </tr>  <tr> <td><b>Training Program</b></td> <td>{{ $('20 - Generate Welcome Email Data').item.json.trainingProgram }}</td> </tr>  <tr> <td><b>Assessment Due</b></td> <td>{{ $('19 - Assign Training Resources').item.json.assessmentDueDays }} days</td> </tr>  </table>  <p> Please contact the partner within {{ $('18 - Assign Manager').item.json.responseSLA }}. </p>  </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        6320,
+        -160
+      ],
+      "id": "1cf72085-246d-49e3-8409-fe6341f7ca94",
+      "name": "22 - Notify Manager",
+      "webhookId": "81071d63-f432-466e-8428-456d13a64f50",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "3931a695-4233-8000-b629-e3571b1a51e7",
+          "mode": "list",
+          "cachedResultName": "Partner Training Operations",
+          "cachedResultUrl": "https://app.notion.com/p/3931a69542338000b629e3571b1a51e7"
+        },
+        "title": "={{ $('02 - Normalize Partner Data').first().json.contactName }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Company|rich_text",
+              "textContent": "={{ $('02 - Normalize Partner Data').first().json.companyName }}"
+            },
+            {
+              "key": "Email|email",
+              "emailValue": "={{ $('02 - Normalize Partner Data').first().json.email }}"
+            },
+            {
+              "key": "Phone|phone_number",
+              "phoneValue": "={{ $('02 - Normalize Partner Data').first().json.phoneNumber }}"
+            },
+            {
+              "key": "Country|select",
+              "selectValue": "={{ $('02 - Normalize Partner Data').first().json.country }}"
+            },
+            {
+              "key": "Training Program|select",
+              "selectValue": "={{ $('20 - Generate Welcome Email Data').item.json.trainingProgram }}"
+            },
+            {
+              "key": "Job Title|rich_text",
+              "textContent": "={{ $('02 - Normalize Partner Data').first().json.jobTitle }}"
+            },
+            {
+              "key": "CRM Status|status",
+              "statusValue": "={{ $('02 - Normalize Partner Data').first().json.crmStatus }}"
+            },
+            {
+              "key": "Folder Status|status",
+              "statusValue": "={{ $('15 - Prepare Drive Metadata').first().json.folderStatus }}"
+            },
+            {
+              "key": "Attachment Status|status",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Validation Status|status",
+              "statusValue": "={{ $('02 - Normalize Partner Data').first().json.validationStatus }}"
+            },
+            {
+              "key": "Email Status|status",
+              "statusValue": "Sent"
+            },
+            {
+              "key": "Overall Status|status",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Company Folder|url",
+              "urlValue": "={{ $('15 - Prepare Drive Metadata').first().json.companyFolderUrl }}"
+            },
+            {
+              "key": "Contact Folder|url",
+              "urlValue": "={{ $('15 - Prepare Drive Metadata').first().json.contactFolderUrl }}"
+            },
+            {
+              "key": "Processing Started|date",
+              "date": "={{ $('02 - Normalize Partner Data').first().json.processingStartedAt }}"
+            },
+            {
+              "key": "Execution ID|rich_text",
+              "textContent": "={{ $('02 - Normalize Partner Data').first().json.executionId }}"
+            },
+            {
+              "key": "Additional Notes|rich_text",
+              "textContent": "={{ $('02 - Normalize Partner Data').first().json.notes }}"
+            },
+            {
+              "key": "Preferred Training Time|select",
+              "selectValue": "={{ $('02 - Normalize Partner Data').first().json.preferredTrainingTime }}"
+            },
+            {
+              "key": "Training Status|status",
+              "statusValue": "Not started"
+            },
+            {
+              "key": "Training Start Date|date",
+              "date": "={{ $now }}"
+            },
+            {
+              "key": "Training Deadline|date",
+              "date": "={{ DateTime.now().plus({ days: 7 }).toISO() }}"
+            },
+            {
+              "key": "Progress %|number"
+            },
+            {
+              "key": "Reminder Count|number"
+            },
+            {
+              "key": "Manager Notifed|checkbox"
+            },
+            {
+              "key": "Certificate Issued|checkbox"
+            },
+            {
+              "key": "Archived|checkbox"
+            },
+            {
+              "key": "Manager Email|email",
+              "emailValue": "={{ $('20 - Generate Welcome Email Data').item.json.emailCC }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        6528,
+        -160
+      ],
+      "id": "b511adc8-b4cd-4ece-878b-64850c8791c7",
+      "name": "23 - Create Notion Database",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA",
+          "mode": "list",
+          "cachedResultName": "Partner Training Request Form Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 201046369,
+          "mode": "list",
+          "cachedResultName": "Partner Registry",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit#gid=201046369"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Business Email": "={{ $('02 - Normalize Partner Data').first().json.email }}",
+            "Company Name": "={{ $('02 - Normalize Partner Data').first().json.companyName }}",
+            "Contact Full Name": "={{ $('02 - Normalize Partner Data').item.json[\"Contact Full Name\"] }}",
+            "Job Title": "={{ $('02 - Normalize Partner Data').item.json[\"Job Title\"] }}",
+            "Country": "={{ $('02 - Normalize Partner Data').item.json.Country }}",
+            "Phone Number": "={{ $('02 - Normalize Partner Data').item.json[\"Phone Number\"] }}",
+            "Training Program": "={{ $('02 - Normalize Partner Data').item.json[\"Training Program\"] }}",
+            "Preferred Training Time": "={{ $('02 - Normalize Partner Data').item.json[\"Preferred Training Time\"] }}",
+            "Additional Notes": "={{ $('02 - Normalize Partner Data').item.json[\"Additional Notes\"] }}",
+            "Company Folder ID": "={{ $('15 - Prepare Drive Metadata').item.json.companyFolderId }}",
+            "Company Folder URL": "={{ $('15 - Prepare Drive Metadata').item.json.companyFolderUrl }}",
+            "Contact Folder ID": "={{ $('15 - Prepare Drive Metadata').item.json.contactFolderId }}",
+            "Contact Folder URL": "={{ $('15 - Prepare Drive Metadata').item.json.contactFolderUrl }}",
+            "NDA Folder ID": "={{ $('15 - Prepare Drive Metadata').item.json.ndaFolderId }}",
+            "Other Documents Folder ID": "={{ $('15 - Prepare Drive Metadata').item.json.otherDocumentsFolderId }}",
+            "CV Folder ID": "={{ $('15 - Prepare Drive Metadata').item.json.cvFolderId }}",
+            "Notion Page ID": "={{ $json.id }}",
+            "Validation Status": "Completed",
+            "CRM Status": "Completed",
+            "Folder Status": "Completed",
+            "Attachment Status": "Completed",
+            "Email Status": "Sent",
+            "Notion Staus": "Completed",
+            "Execution ID": "={{ $json.property_execution_id }}",
+            "Processing Start Time": "={{ $json.property_processing_started }}",
+            "Last Updated": "={{ $now }}",
+            "Overall Status": "Completed",
+            "Workflow Version": "1.0",
+            "Partner ID": "={{ \"PTP-\" + $now.format(\"yyyyMMdd\") + \"-\" + String($execution.id).padStart(4,\"0\") }}",
+            "HubSpot Contact ID": "="
+          },
+          "matchingColumns": [
+            "Business Email"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Full Name",
+              "displayName": "Contact Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Business Email",
+              "displayName": "Business Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Country",
+              "displayName": "Country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Training Program",
+              "displayName": "Training Program",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Preferred Training Time",
+              "displayName": "Preferred Training Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Additional Notes",
+              "displayName": "Additional Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Upload CV",
+              "displayName": "Upload CV",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Upload NDA",
+              "displayName": "Upload NDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Upload Other Documents",
+              "displayName": "Upload Other Documents",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Partner ID",
+              "displayName": "Partner ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Folder ID",
+              "displayName": "Company Folder ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Folder URL",
+              "displayName": "Company Folder URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Folder ID",
+              "displayName": "Contact Folder ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Folder URL",
+              "displayName": "Contact Folder URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NDA Folder ID",
+              "displayName": "NDA Folder ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Other Documents Folder ID",
+              "displayName": "Other Documents Folder ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CV Folder ID",
+              "displayName": "CV Folder ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "HubSpot Contact ID",
+              "displayName": "HubSpot Contact ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notion Page ID",
+              "displayName": "Notion Page ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Validation Status",
+              "displayName": "Validation Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CRM Status",
+              "displayName": "CRM Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Folder Status",
+              "displayName": "Folder Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Attachment Status",
+              "displayName": "Attachment Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Status",
+              "displayName": "Email Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notion Staus",
+              "displayName": "Notion Staus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lifecycle Stage",
+              "displayName": "Lifecycle Stage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Overall Status",
+              "displayName": "Overall Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Workflow Version",
+              "displayName": "Workflow Version",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Execution ID",
+              "displayName": "Execution ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last Updated",
+              "displayName": "Last Updated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Error Message",
+              "displayName": "Error Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Registration Date",
+              "displayName": "Registration Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processing Start Time",
+              "displayName": "Processing Start Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processing End Time",
+              "displayName": "Processing End Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total Processing Time",
+              "displayName": "Total Processing Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        6704,
+        -160
+      ],
+      "id": "7d37af30-e7e2-4c61-bc54-d5db14b7e723",
+      "name": "24 - Update Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mAZRslpL5yMpwrHf",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "188f7ab4-e3cf-4ec1-b011-d9f621a05adb",
+              "name": "overallStatus",
+              "value": "Completed",
+              "type": "string"
+            },
+            {
+              "id": "6adcee3e-7653-4d1a-82df-aceac6591abc",
+              "name": "processingFinishedAt",
+              "value": "={{$now}}",
+              "type": "string"
+            },
+            {
+              "id": "d292d011-ee6f-4c7f-997a-123a548bcf46",
+              "name": "executionStatus",
+              "value": "Success",
+              "type": "string"
+            },
+            {
+              "id": "f9f3a9a0-1215-4cc4-9426-139f436c915f",
+              "name": "workflowName",
+              "value": "WF-01 Parent Orchestrator",
+              "type": "string"
+            },
+            {
+              "id": "001570bf-eec0-4aee-9f41-5b5b77d335d5",
+              "name": "completedBy",
+              "value": "n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6912,
+        -160
+      ],
+      "id": "ad6a147b-9a6c-47d1-aa77-c9cd8eff2f69",
+      "name": "25 - Finalize Workflow"
+    },
+    {
+      "parameters": {
+        "sendTo": "raltafur40@gmail.com",
+        "subject": "=✅ Partner Onboarding Completed - {{ $('02 - Normalize Partner Data').first().json.contactName }}",
+        "message": "=<h2>Partner Training Request Completed</h2>  <b>Partner</b><br> {{ $('02 - Normalize Partner Data').first().json.contactName }}  <br><br>  <b>Company</b><br> {{ $('02 - Normalize Partner Data').first().json.companyName }}  <br><br>  <b>Program</b><br> {{ $('02 - Normalize Partner Data').first().json.trainingProgram }}  <br><br>  <b>Partner ID</b><br> {{ $('24 - Update Google Sheets').item.json[\"Partner ID\"] }}  <br><br>  <b>Execution ID</b><br> {{ $execution.id }}  <br><br>  <b>Status</b><br>  ✅ Successfully Completed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        7088,
+        -160
+      ],
+      "id": "f2276c24-9d29-45ce-9eff-347089c93fe4",
+      "name": "26 - Notify Success",
+      "webhookId": "5d5f38b2-22ad-4e25-a921-804469576d82",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA",
+          "mode": "list",
+          "cachedResultName": "Partner Training Request Form Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Workflow Logs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TW5wwMJqCT1iD1P5MAqCbBPbQfRJiRptD_P8XTvjaVA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now }}",
+            "Execution ID": "={{ $execution.id }}",
+            "Partner ID": "={{ $('24 - Update Google Sheets').item.json[\"Partner ID\"] }}",
+            "Name": "={{ $('02 - Normalize Partner Data').first().json.contactName }}",
+            "Email": "={{ $('02 - Normalize Partner Data').first().json.email }}",
+            "Company": "={{ $('02 - Normalize Partner Data').first().json.companyName }}",
+            "Status": "Completed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Execution ID",
+              "displayName": "Execution ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Partner ID",
+              "displayName": "Partner ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        7296,
+        -160
+      ],
+      "id": "29188460-edda-4c68-ad5d-9d4bd5217c41",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mAZRslpL5yMpwrHf",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        6368,
+        80
+      ],
+      "id": "c00dcf04-5d8c-4e73-a41a-e6454e159afa",
+      "name": "19.5 - Merge Training Branches"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "663f7836-7b03-4132-b224-f483058b3ea2",
+              "name": "programName",
+              "value": "Product Basics",
+              "type": "string"
+            },
+            {
+              "id": "7e3d38f8-cfd4-40f1-8e6c-abc724ac74e2",
+              "name": "programCode",
+              "value": "PB",
+              "type": "string"
+            },
+            {
+              "id": "13cbc15d-f80a-42b3-99a5-47dd77bb8e30",
+              "name": "welcomeTemplate",
+              "value": "welcome_product_basics",
+              "type": "string"
+            },
+            {
+              "id": "88806dc1-57dc-4c59-a960-52664be87ecd",
+              "name": "managerName",
+              "value": "Product Basics Manager",
+              "type": "string"
+            },
+            {
+              "id": "d6311214-1882-4763-925b-082c37f4fd92",
+              "name": "managerEmail",
+              "value": "product.manager@example.com",
+              "type": "string"
+            },
+            {
+              "id": "a2dac9b6-a0a9-4b87-9a4d-3c27948ee3eb",
+              "name": "trainingFolder",
+              "value": "Product Basics",
+              "type": "string"
+            },
+            {
+              "id": "11d2bf12-cb1c-44c7-a5aa-3972a47dd0a9",
+              "name": "certificateTemplate",
+              "value": "Product Basics Certificate",
+              "type": "string"
+            },
+            {
+              "id": "0f585d86-c337-4af2-8ef2-dd8c72246376",
+              "name": "emailSubject",
+              "value": "Welcome to the Product Basics Training Program",
+              "type": "string"
+            },
+            {
+              "id": "3f108908-a5c7-4c23-9b7b-b27c6526b120",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "57227884-38a6-4453-bcf2-e5bde3fcfeec",
+              "name": "branchStatus",
+              "value": "Configured",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5312,
+        272
+      ],
+      "id": "757be12e-b171-4a7a-91d3-60a2dda4faa7",
+      "name": "17.A - Configure Product Basics"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2ff3fe-920f-4782-8406-cbf78c4ab52a",
+              "name": "trainingPortal",
+              "value": "https://academy.optimizely.com",
+              "type": "string"
+            },
+            {
+              "id": "a796ad4b-a5d3-47d9-bc16-6e65e63d0855",
+              "name": "trainingGuide",
+              "value": "Commerce Platform Onboarding Guide.pdf",
+              "type": "string"
+            },
+            {
+              "id": "c6ea2f08-604b-45f9-9cf2-e35164f2b56f",
+              "name": "assesmentType",
+              "value": "Knowledge Assessment",
+              "type": "string"
+            },
+            {
+              "id": "4da7b1b2-76db-4b3f-9301-d0bcf4eaf856",
+              "name": "assessmentDueDays",
+              "value": "7",
+              "type": "string"
+            },
+            {
+              "id": "9906fa83-5399-4465-8827-7e606061b642",
+              "name": "certificateEligible",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "0c894481-53f2-4751-94a6-60b1cde92b4a",
+              "name": "supportEmail",
+              "value": "partner.enablement@example.com",
+              "type": "string"
+            },
+            {
+              "id": "6db650cc-68c0-4972-b2b4-d66c6e67099b",
+              "name": "resourceStatus",
+              "value": "Assigned",
+              "type": "string"
+            },
+            {
+              "id": "6a8f1bcc-333b-401b-a58a-ad00c22aed59",
+              "name": "managerEmail",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5728,
+        272
+      ],
+      "id": "f6d7e93d-d4a6-41c1-bf32-2eddec7f0494",
+      "name": "19.A - Assign Training Resources"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "663f7836-7b03-4132-b224-f483058b3ea2",
+              "name": "programName",
+              "value": "CMS Training",
+              "type": "string"
+            },
+            {
+              "id": "7e3d38f8-cfd4-40f1-8e6c-abc724ac74e2",
+              "name": "programCode",
+              "value": "CMST",
+              "type": "string"
+            },
+            {
+              "id": "13cbc15d-f80a-42b3-99a5-47dd77bb8e30",
+              "name": "welcomeTemplate",
+              "value": "welcome_cms_training",
+              "type": "string"
+            },
+            {
+              "id": "88806dc1-57dc-4c59-a960-52664be87ecd",
+              "name": "managerName",
+              "value": "CMS Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "d6311214-1882-4763-925b-082c37f4fd92",
+              "name": "managerEmail",
+              "value": "cmst.manager@example.com",
+              "type": "string"
+            },
+            {
+              "id": "a2dac9b6-a0a9-4b87-9a4d-3c27948ee3eb",
+              "name": "trainingFolder",
+              "value": "CMS Training",
+              "type": "string"
+            },
+            {
+              "id": "11d2bf12-cb1c-44c7-a5aa-3972a47dd0a9",
+              "name": "certificateTemplate",
+              "value": "CMS Training Certificate",
+              "type": "string"
+            },
+            {
+              "id": "0f585d86-c337-4af2-8ef2-dd8c72246376",
+              "name": "emailSubject",
+              "value": "Welcome to the CMS Training Program",
+              "type": "string"
+            },
+            {
+              "id": "3f108908-a5c7-4c23-9b7b-b27c6526b120",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "57227884-38a6-4453-bcf2-e5bde3fcfeec",
+              "name": "branchStatus",
+              "value": "Configured",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5296,
+        608
+      ],
+      "id": "c930f4fb-2827-4186-8f99-0bf26986ee73",
+      "name": "17.B - Configure CMS Training"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ca12bf2-c0f5-45b6-ae5f-1a928930be37",
+              "name": "managerName",
+              "value": "Sarah Ahmed",
+              "type": "string"
+            },
+            {
+              "id": "30549c7a-d5df-48a3-b94d-3a11d540859d",
+              "name": "managerEmail",
+              "value": "sarah.ahmed@yourcompany.com",
+              "type": "string"
+            },
+            {
+              "id": "35f60f4d-77a5-4f5e-896e-19adede3d70d",
+              "name": "managerDepartment",
+              "value": "Partner Enablement",
+              "type": "string"
+            },
+            {
+              "id": "34fa6f10-3af0-41cd-8307-7512006e771a",
+              "name": "managerRole",
+              "value": "Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "4985f2d1-e541-45d4-9dfa-2ba9d44df5a7",
+              "name": "meetingDuration",
+              "value": "60 Minutes",
+              "type": "string"
+            },
+            {
+              "id": "5d52abb0-ede6-40a8-82cd-b502321517c7",
+              "name": "meetingMode",
+              "value": "Google Meet",
+              "type": "string"
+            },
+            {
+              "id": "004efdde-e696-4942-bba4-cddf3a27d2d2",
+              "name": "responseSLA",
+              "value": "24 Hours",
+              "type": "string"
+            },
+            {
+              "id": "8ff65555-aafe-45a5-8733-cd6f140999bb",
+              "name": "managerAssigned",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5504,
+        608
+      ],
+      "id": "8ffb3012-8391-4363-b48d-b9142cdb5bcb",
+      "name": "18.B- Assign Manager"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2ff3fe-920f-4782-8406-cbf78c4ab52a",
+              "name": "trainingPortal",
+              "value": "https://academy.optimizely.com",
+              "type": "string"
+            },
+            {
+              "id": "a796ad4b-a5d3-47d9-bc16-6e65e63d0855",
+              "name": "trainingGuide",
+              "value": "Commerce Platform Onboarding Guide.pdf",
+              "type": "string"
+            },
+            {
+              "id": "c6ea2f08-604b-45f9-9cf2-e35164f2b56f",
+              "name": "assesmentType",
+              "value": "Knowledge Assessment",
+              "type": "string"
+            },
+            {
+              "id": "4da7b1b2-76db-4b3f-9301-d0bcf4eaf856",
+              "name": "assessmentDueDays",
+              "value": "7",
+              "type": "string"
+            },
+            {
+              "id": "9906fa83-5399-4465-8827-7e606061b642",
+              "name": "certificateEligible",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "0c894481-53f2-4751-94a6-60b1cde92b4a",
+              "name": "supportEmail",
+              "value": "partner.enablement@example.com",
+              "type": "string"
+            },
+            {
+              "id": "6db650cc-68c0-4972-b2b4-d66c6e67099b",
+              "name": "resourceStatus",
+              "value": "Assigned",
+              "type": "string"
+            },
+            {
+              "id": "6a8f1bcc-333b-401b-a58a-ad00c22aed59",
+              "name": "managerEmail",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5712,
+        608
+      ],
+      "id": "a4908f2a-2ae6-4177-9d44-8572d51a0182",
+      "name": "19.B - Assign Training Resources"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "663f7836-7b03-4132-b224-f483058b3ea2",
+              "name": "programName",
+              "value": "API Integration",
+              "type": "string"
+            },
+            {
+              "id": "7e3d38f8-cfd4-40f1-8e6c-abc724ac74e2",
+              "name": "programCode",
+              "value": "API (I)",
+              "type": "string"
+            },
+            {
+              "id": "13cbc15d-f80a-42b3-99a5-47dd77bb8e30",
+              "name": "welcomeTemplate",
+              "value": "welcome_api_integration",
+              "type": "string"
+            },
+            {
+              "id": "88806dc1-57dc-4c59-a960-52664be87ecd",
+              "name": "managerName",
+              "value": "API Integration Manager",
+              "type": "string"
+            },
+            {
+              "id": "d6311214-1882-4763-925b-082c37f4fd92",
+              "name": "managerEmail",
+              "value": "apii.manager@example.com",
+              "type": "string"
+            },
+            {
+              "id": "a2dac9b6-a0a9-4b87-9a4d-3c27948ee3eb",
+              "name": "trainingFolder",
+              "value": "API Integration",
+              "type": "string"
+            },
+            {
+              "id": "11d2bf12-cb1c-44c7-a5aa-3972a47dd0a9",
+              "name": "certificateTemplate",
+              "value": "API Integration Certificate",
+              "type": "string"
+            },
+            {
+              "id": "0f585d86-c337-4af2-8ef2-dd8c72246376",
+              "name": "emailSubject",
+              "value": "Welcome to the API Integration Training Program",
+              "type": "string"
+            },
+            {
+              "id": "3f108908-a5c7-4c23-9b7b-b27c6526b120",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "57227884-38a6-4453-bcf2-e5bde3fcfeec",
+              "name": "branchStatus",
+              "value": "Configured",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5296,
+        -464
+      ],
+      "id": "88699aaa-761b-4485-a651-d2036e439510",
+      "name": "17.C - Configure API Integration"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ca12bf2-c0f5-45b6-ae5f-1a928930be37",
+              "name": "managerName",
+              "value": "Sarah Ahmed",
+              "type": "string"
+            },
+            {
+              "id": "30549c7a-d5df-48a3-b94d-3a11d540859d",
+              "name": "managerEmail",
+              "value": "sarah.ahmed@yourcompany.com",
+              "type": "string"
+            },
+            {
+              "id": "35f60f4d-77a5-4f5e-896e-19adede3d70d",
+              "name": "managerDepartment",
+              "value": "Partner Enablement",
+              "type": "string"
+            },
+            {
+              "id": "34fa6f10-3af0-41cd-8307-7512006e771a",
+              "name": "managerRole",
+              "value": "Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "4985f2d1-e541-45d4-9dfa-2ba9d44df5a7",
+              "name": "meetingDuration",
+              "value": "60 Minutes",
+              "type": "string"
+            },
+            {
+              "id": "5d52abb0-ede6-40a8-82cd-b502321517c7",
+              "name": "meetingMode",
+              "value": "Google Meet",
+              "type": "string"
+            },
+            {
+              "id": "004efdde-e696-4942-bba4-cddf3a27d2d2",
+              "name": "responseSLA",
+              "value": "24 Hours",
+              "type": "string"
+            },
+            {
+              "id": "8ff65555-aafe-45a5-8733-cd6f140999bb",
+              "name": "managerAssigned",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5504,
+        -464
+      ],
+      "id": "69952f8e-1803-4a09-b95c-7710b3cea6f2",
+      "name": "18.C - Assign Manager"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2ff3fe-920f-4782-8406-cbf78c4ab52a",
+              "name": "trainingPortal",
+              "value": "https://academy.optimizely.com",
+              "type": "string"
+            },
+            {
+              "id": "a796ad4b-a5d3-47d9-bc16-6e65e63d0855",
+              "name": "trainingGuide",
+              "value": "Commerce Platform Onboarding Guide.pdf",
+              "type": "string"
+            },
+            {
+              "id": "c6ea2f08-604b-45f9-9cf2-e35164f2b56f",
+              "name": "assesmentType",
+              "value": "Knowledge Assessment",
+              "type": "string"
+            },
+            {
+              "id": "4da7b1b2-76db-4b3f-9301-d0bcf4eaf856",
+              "name": "assessmentDueDays",
+              "value": "7",
+              "type": "string"
+            },
+            {
+              "id": "9906fa83-5399-4465-8827-7e606061b642",
+              "name": "certificateEligible",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "0c894481-53f2-4751-94a6-60b1cde92b4a",
+              "name": "supportEmail",
+              "value": "partner.enablement@example.com",
+              "type": "string"
+            },
+            {
+              "id": "6db650cc-68c0-4972-b2b4-d66c6e67099b",
+              "name": "resourceStatus",
+              "value": "Assigned",
+              "type": "string"
+            },
+            {
+              "id": "6a8f1bcc-333b-401b-a58a-ad00c22aed59",
+              "name": "managerEmail",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5712,
+        -464
+      ],
+      "id": "7f4de1f6-2db7-4735-8817-bbd4ff478050",
+      "name": "19.C - Assign Training Resources"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "663f7836-7b03-4132-b224-f483058b3ea2",
+              "name": "programName",
+              "value": "Experimentation",
+              "type": "string"
+            },
+            {
+              "id": "7e3d38f8-cfd4-40f1-8e6c-abc724ac74e2",
+              "name": "programCode",
+              "value": "Exp",
+              "type": "string"
+            },
+            {
+              "id": "13cbc15d-f80a-42b3-99a5-47dd77bb8e30",
+              "name": "welcomeTemplate",
+              "value": "welcome_experimentation",
+              "type": "string"
+            },
+            {
+              "id": "88806dc1-57dc-4c59-a960-52664be87ecd",
+              "name": "managerName",
+              "value": "Experimentation Manager",
+              "type": "string"
+            },
+            {
+              "id": "d6311214-1882-4763-925b-082c37f4fd92",
+              "name": "managerEmail",
+              "value": "exp.manager@example.com",
+              "type": "string"
+            },
+            {
+              "id": "a2dac9b6-a0a9-4b87-9a4d-3c27948ee3eb",
+              "name": "trainingFolder",
+              "value": "Experimentation",
+              "type": "string"
+            },
+            {
+              "id": "11d2bf12-cb1c-44c7-a5aa-3972a47dd0a9",
+              "name": "certificateTemplate",
+              "value": "Experimentation Certificate",
+              "type": "string"
+            },
+            {
+              "id": "0f585d86-c337-4af2-8ef2-dd8c72246376",
+              "name": "emailSubject",
+              "value": "Welcome to the Experimentation Training Program",
+              "type": "string"
+            },
+            {
+              "id": "3f108908-a5c7-4c23-9b7b-b27c6526b120",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "57227884-38a6-4453-bcf2-e5bde3fcfeec",
+              "name": "branchStatus",
+              "value": "Configured",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5360,
+        48
+      ],
+      "id": "fd6c529e-fce9-42a5-9716-74b1d64105ed",
+      "name": "17.D - Configure Experimentation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ca12bf2-c0f5-45b6-ae5f-1a928930be37",
+              "name": "managerName",
+              "value": "Sarah Ahmed",
+              "type": "string"
+            },
+            {
+              "id": "30549c7a-d5df-48a3-b94d-3a11d540859d",
+              "name": "managerEmail",
+              "value": "sarah.ahmed@yourcompany.com",
+              "type": "string"
+            },
+            {
+              "id": "35f60f4d-77a5-4f5e-896e-19adede3d70d",
+              "name": "managerDepartment",
+              "value": "Partner Enablement",
+              "type": "string"
+            },
+            {
+              "id": "34fa6f10-3af0-41cd-8307-7512006e771a",
+              "name": "managerRole",
+              "value": "Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "4985f2d1-e541-45d4-9dfa-2ba9d44df5a7",
+              "name": "meetingDuration",
+              "value": "60 Minutes",
+              "type": "string"
+            },
+            {
+              "id": "5d52abb0-ede6-40a8-82cd-b502321517c7",
+              "name": "meetingMode",
+              "value": "Google Meet",
+              "type": "string"
+            },
+            {
+              "id": "004efdde-e696-4942-bba4-cddf3a27d2d2",
+              "name": "responseSLA",
+              "value": "24 Hours",
+              "type": "string"
+            },
+            {
+              "id": "8ff65555-aafe-45a5-8733-cd6f140999bb",
+              "name": "managerAssigned",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5568,
+        48
+      ],
+      "id": "a77d3bbe-4b5e-4bd7-ab75-b6c7ff22f023",
+      "name": "18.D - Assign Manager"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2ff3fe-920f-4782-8406-cbf78c4ab52a",
+              "name": "trainingPortal",
+              "value": "https://academy.optimizely.com",
+              "type": "string"
+            },
+            {
+              "id": "a796ad4b-a5d3-47d9-bc16-6e65e63d0855",
+              "name": "trainingGuide",
+              "value": "Commerce Platform Onboarding Guide.pdf",
+              "type": "string"
+            },
+            {
+              "id": "c6ea2f08-604b-45f9-9cf2-e35164f2b56f",
+              "name": "assesmentType",
+              "value": "Knowledge Assessment",
+              "type": "string"
+            },
+            {
+              "id": "4da7b1b2-76db-4b3f-9301-d0bcf4eaf856",
+              "name": "assessmentDueDays",
+              "value": "7",
+              "type": "string"
+            },
+            {
+              "id": "9906fa83-5399-4465-8827-7e606061b642",
+              "name": "certificateEligible",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "0c894481-53f2-4751-94a6-60b1cde92b4a",
+              "name": "supportEmail",
+              "value": "partner.enablement@example.com",
+              "type": "string"
+            },
+            {
+              "id": "6db650cc-68c0-4972-b2b4-d66c6e67099b",
+              "name": "resourceStatus",
+              "value": "Assigned",
+              "type": "string"
+            },
+            {
+              "id": "6a8f1bcc-333b-401b-a58a-ad00c22aed59",
+              "name": "managerEmail",
+              "value": "={{ $json.managerEmail }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5776,
+        48
+      ],
+      "id": "6c68de73-e634-4945-850d-82f90b57c2ee",
+      "name": "19.D - Assign Training Resources"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ca12bf2-c0f5-45b6-ae5f-1a928930be37",
+              "name": "managerName",
+              "value": "Sarah Ahmed",
+              "type": "string"
+            },
+            {
+              "id": "30549c7a-d5df-48a3-b94d-3a11d540859d",
+              "name": "managerEmail",
+              "value": "sarah.ahmed@yourcompany.com",
+              "type": "string"
+            },
+            {
+              "id": "35f60f4d-77a5-4f5e-896e-19adede3d70d",
+              "name": "managerDepartment",
+              "value": "Partner Enablement",
+              "type": "string"
+            },
+            {
+              "id": "34fa6f10-3af0-41cd-8307-7512006e771a",
+              "name": "managerRole",
+              "value": "Training Manager",
+              "type": "string"
+            },
+            {
+              "id": "4985f2d1-e541-45d4-9dfa-2ba9d44df5a7",
+              "name": "meetingDuration",
+              "value": "60 Minutes",
+              "type": "string"
+            },
+            {
+              "id": "5d52abb0-ede6-40a8-82cd-b502321517c7",
+              "name": "meetingMode",
+              "value": "Google Meet",
+              "type": "string"
+            },
+            {
+              "id": "004efdde-e696-4942-bba4-cddf3a27d2d2",
+              "name": "responseSLA",
+              "value": "24 Hours",
+              "type": "string"
+            },
+            {
+              "id": "8ff65555-aafe-45a5-8733-cd6f140999bb",
+              "name": "managerAssigned",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5520,
+        272
+      ],
+      "id": "706810fa-20c0-4a30-bf69-c48f9c9a1ab7",
+      "name": "18.A - Assign Manager"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 - Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "02 - Normalize Partner Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Normalize Partner Data": {
+      "main": [
+        [
+          {
+            "node": "03 - Validation Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Validation Engine": {
+      "main": [
+        [
+          {
+            "node": "04 - Search Existing Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Search Existing Contact": {
+      "main": [
+        [
+          {
+            "node": "05 - Contact Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06 - Search Contact Folder": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        []
+      ]
+    },
+    "07 - Merge CRM Result": {
+      "main": [
+        [
+          {
+            "node": "08 - Search Company Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "05 - Contact Exists?": {
+      "main": [
+        [
+          {
+            "node": "06A - Update Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "06B - Create Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06A - Update Contact": {
+      "main": [
+        [
+          {
+            "node": "06A.1 - Set CRM Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06B - Create Contact": {
+      "main": [
+        [
+          {
+            "node": "06B.1 - Set CRM Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06A.1 - Set CRM Action": {
+      "main": [
+        [
+          {
+            "node": "07 - Merge CRM Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06B.1 - Set CRM Action": {
+      "main": [
+        [
+          {
+            "node": "07 - Merge CRM Result",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "08 - Search Company Folder": {
+      "main": [
+        [
+          {
+            "node": "09 - Company Folder Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "09 - Company Folder Exists?": {
+      "main": [
+        [
+          {
+            "node": "11 - Merge Company Folder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "10B - Create Company Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "10B - Create Company Folder": {
+      "main": [
+        [
+          {
+            "node": "11 - Merge Company Folder",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "11 - Merge Company Folder": {
+      "main": [
+        [
+          {
+            "node": "11A - Prepare Drive Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "11A - Prepare Drive Data": {
+      "main": [
+        [
+          {
+            "node": "12 - Create Contact Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "12 - Create Contact Folder": {
+      "main": [
+        [
+          {
+            "node": "13.01 - Create CV Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.02 - Create NDA Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.03 - Create Other Documents Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.04 - Create Training Materials Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.05 - Create Certificates Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.06 - Create Assessments Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.07 - Create Meeting Notes Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.08 - Create Communication Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "13.09 - Create Archive Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13 - Prepare Folder List": {
+      "main": [
+        []
+      ]
+    },
+    "13.09 - Create Archive Folder": {
+      "main": [
+        []
+      ]
+    },
+    "13.01 - Create CV Folder": {
+      "main": [
+        [
+          {
+            "node": "13.01A - Extract Attachment IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.02 - Create NDA Folder": {
+      "main": [
+        [
+          {
+            "node": "13.02A - Extract Attachment IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.01A - Extract Attachment IDs": {
+      "main": [
+        [
+          {
+            "node": "13.01B - Download CV File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.01B - Download CV File": {
+      "main": [
+        [
+          {
+            "node": "13.01C - Upload CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.02B - Download NDA File": {
+      "main": [
+        [
+          {
+            "node": "13.02C - Upload NDA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.02A - Extract Attachment IDs": {
+      "main": [
+        [
+          {
+            "node": "13.02B - Download NDA File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.03 - Create Other Documents Folder": {
+      "main": [
+        [
+          {
+            "node": "13.03A - Extract Attachment IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.03A - Extract Attachment IDs": {
+      "main": [
+        [
+          {
+            "node": "13.03B - Download Other Documents File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.03B - Download Other Documents File": {
+      "main": [
+        [
+          {
+            "node": "13.03C - Upload Other Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.03C - Upload Other Documents": {
+      "main": [
+        [
+          {
+            "node": "14 - Wait For All Uploads",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "13.01C - Upload CV": {
+      "main": [
+        [
+          {
+            "node": "14 - Wait For All Uploads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "13.02C - Upload NDA": {
+      "main": [
+        [
+          {
+            "node": "14 - Wait For All Uploads",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "14 - Wait For All Uploads": {
+      "main": [
+        [
+          {
+            "node": "15 - Prepare Drive Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "15 - Prepare Drive Metadata": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "16 - Route Training Program",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "16 - Route Training Program": {
+      "main": [
+        [
+          {
+            "node": "17 - Configure Commerce Platform",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "17.A - Configure Product Basics",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "17.B - Configure CMS Training",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "17.D - Configure Experimentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "17.C - Configure API Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "17 - Configure Commerce Platform": {
+      "main": [
+        [
+          {
+            "node": "18 - Assign Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18 - Assign Manager": {
+      "main": [
+        [
+          {
+            "node": "19 - Assign Training Resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19 - Assign Training Resources": {
+      "main": [
+        [
+          {
+            "node": "19.5 - Merge Training Branches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "20 - Generate Welcome Email Data": {
+      "main": [
+        [
+          {
+            "node": "21 -  Send Welcome Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "21 -  Send Welcome Mail": {
+      "main": [
+        [
+          {
+            "node": "22 - Notify Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "22 - Notify Manager": {
+      "main": [
+        [
+          {
+            "node": "23 - Create Notion Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "23 - Create Notion Database": {
+      "main": [
+        [
+          {
+            "node": "24 - Update Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "24 - Update Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "25 - Finalize Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "25 - Finalize Workflow": {
+      "main": [
+        [
+          {
+            "node": "26 - Notify Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "26 - Notify Success": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19.5 - Merge Training Branches": {
+      "main": [
+        [
+          {
+            "node": "20 - Generate Welcome Email Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "17.A - Configure Product Basics": {
+      "main": [
+        [
+          {
+            "node": "18.A - Assign Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19.A - Assign Training Resources": {
+      "main": [
+        [
+          {
+            "node": "19.5 - Merge Training Branches",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "17.B - Configure CMS Training": {
+      "main": [
+        [
+          {
+            "node": "18.B- Assign Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18.B- Assign Manager": {
+      "main": [
+        [
+          {
+            "node": "19.B - Assign Training Resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19.B - Assign Training Resources": {
+      "main": [
+        [
+          {
+            "node": "19.5 - Merge Training Branches",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "17.C - Configure API Integration": {
+      "main": [
+        [
+          {
+            "node": "18.C - Assign Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18.C - Assign Manager": {
+      "main": [
+        [
+          {
+            "node": "19.C - Assign Training Resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19.C - Assign Training Resources": {
+      "main": [
+        [
+          {
+            "node": "19.5 - Merge Training Branches",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "17.D - Configure Experimentation": {
+      "main": [
+        [
+          {
+            "node": "18.D - Assign Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18.D - Assign Manager": {
+      "main": [
+        [
+          {
+            "node": "19.D - Assign Training Resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18.A - Assign Manager": {
+      "main": [
+        [
+          {
+            "node": "19.A - Assign Training Resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "19.D - Assign Training Resources": {
+      "main": [
+        [
+          {
+            "node": "19.5 - Merge Training Branches",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2d12ed37-843d-47ef-836e-1c2bce9485eb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "OBkozd0NzjWspmVe",
+  "tags": []
+}

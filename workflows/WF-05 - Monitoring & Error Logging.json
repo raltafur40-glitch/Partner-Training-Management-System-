@@ -1,0 +1,231 @@
+{
+  "name": "WF-05 - Monitoring & Error Logging",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3d53e32c-2eb3-4d56-ada1-51b934b0cd88",
+      "name": "01 - Catch Workflow Error"
+    },
+    {
+      "parameters": {
+        "jsCode": "const execution = $json.execution || {};\nconst workflow = $json.workflow || {};\nconst node = $json.node || {};\n\nreturn {\n  json: {\n\n    title: `Automation Error - ${new Date().toLocaleString()}`,\n\n    workflowName: workflow.name || \"Unknown Workflow\",\n\n    failedNode: node.name || \"Unknown Node\",\n\n    errorMessage: $json.error?.message || \"Unknown Error\",\n\n    executionId: execution.id || \"N/A\",\n\n    severity: \"High\",\n\n    status: \"Open\",\n\n    timestamp: new Date().toISOString()\n\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "50a8da79-3ffa-4292-bed4-398c27cbdae3",
+      "name": "01 - Capture Error Details"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "39c1a695-4233-8017-bff9-ddb96e4a4025",
+          "mode": "list",
+          "cachedResultName": "Automation Logs",
+          "cachedResultUrl": "https://app.notion.com/p/39c1a69542338017bff9ddb96e4a4025"
+        },
+        "title": "={{$json.title}}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Workflow Name|rich_text",
+              "textContent": "={{$json.workflowName}}"
+            },
+            {
+              "key": "Failed Node|rich_text",
+              "textContent": "={{$json.failedNode}}"
+            },
+            {
+              "key": "Error Message|rich_text",
+              "textContent": "={{$json.errorMessage}}"
+            },
+            {
+              "key": "Execution ID|number",
+              "numberValue": "={{ $json.executionId }}"
+            },
+            {
+              "key": "Severity|select",
+              "selectValue": "={{$json.severity}}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "={{$json.status}}"
+            },
+            {
+              "key": "Timestamp|rich_text",
+              "textContent": "={{$json.timestamp}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0a58dc31-d731-4c22-8a6e-bd9a28b0996f",
+      "name": "02 - Create Error Log",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e30761a9-b8bb-4e56-8f25-ceecdfc9bd40",
+              "name": "errorWorkflow",
+              "value": "={{ $json.property_workflow_name }}",
+              "type": "string"
+            },
+            {
+              "id": "e80f16d8-d5d4-4727-b967-a5006f390fe6",
+              "name": "executionId",
+              "value": "={{ $json.property_execution_id }}",
+              "type": "number"
+            },
+            {
+              "id": "e2e1419b-aba3-4226-9a8e-d4c9ba18ae70",
+              "name": "failedNode",
+              "value": "={{ $json.property_failed_node }}",
+              "type": "string"
+            },
+            {
+              "id": "b94d7e97-0bea-4f4d-848d-2d7d3580fe31",
+              "name": "errorMessage",
+              "value": "={{ $json.property_error_message }}",
+              "type": "string"
+            },
+            {
+              "id": "dc99f424-12b0-4ed0-a2b8-5375b0102913",
+              "name": "timestamp",
+              "value": "={{ $json.property_timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c3f27548-7f55-4f51-8f72-32cdab2ae96d",
+              "name": "severity",
+              "value": "={{ $json.property_severity }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        608,
+        0
+      ],
+      "id": "dd531d94-9f68-4faa-b95a-1036bd35fc37",
+      "name": "03 - Prepare Error Report"
+    },
+    {
+      "parameters": {
+        "sendTo": "raltafur40@gmail.com",
+        "subject": "=🚨 Workflow Failed - {{ $json.errorWorkflow }}",
+        "message": "=<h2>Workflow Failure</h2>  <b>Workflow</b><br> {{ $json.errorWorkflow }}  <br><br>  <b>Execution</b><br> {{ $json.executionId }}  <br><br>  <b>Failed Node</b><br> {{ $json.failedNode }}  <br><br>  <b>Error</b><br> {{ $json.errorMessage }}  <br><br>  <b>Time</b><br> {{ $json.timestamp }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        0
+      ],
+      "id": "b8268c4f-06d8-4908-afad-2885e2999e08",
+      "name": "04 - Notify Administrator",
+      "webhookId": "bbc69bf2-2b73-401d-8337-aa3dbbe765ec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 - Catch Workflow Error": {
+      "main": [
+        [
+          {
+            "node": "01 - Capture Error Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "01 - Capture Error Details": {
+      "main": [
+        [
+          {
+            "node": "02 - Create Error Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Create Error Log": {
+      "main": [
+        [
+          {
+            "node": "03 - Prepare Error Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Prepare Error Report": {
+      "main": [
+        [
+          {
+            "node": "04 - Notify Administrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Notify Administrator": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e3bd727a-bdd7-46a4-9379-4aa94ed21717",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "MpNUyX5OuJRiD3T9",
+  "tags": []
+}

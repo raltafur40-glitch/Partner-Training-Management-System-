@@ -1,0 +1,549 @@
+{
+  "name": "WF-03 - Reminder Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dc8aeed2-fb24-445a-819e-e37da485f46c",
+      "name": "01 - Daily Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "3931a695-4233-8000-b629-e3571b1a51e7",
+          "mode": "list",
+          "cachedResultName": "Partner Training Operations",
+          "cachedResultUrl": "https://app.notion.com/p/3931a69542338000b629e3571b1a51e7"
+        },
+        "simple": false,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Needs Reminder|checkbox",
+              "condition": "equals",
+              "checkboxValue": true
+            },
+            {
+              "key": "Training Status|status",
+              "condition": "does_not_equal",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Training Status|status",
+              "condition": "does_not_equal",
+              "statusValue": "Archived"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "77cdfb0e-98dd-4124-8c8f-a1bbfbc98816",
+      "name": "02 - Get Learners Needing Reminder",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1b5736f7-839a-4eb7-b530-e7c00304adbc",
+              "leftValue": "={{ $json.eligible }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        0
+      ],
+      "id": "d3556010-187d-499a-b82d-58de4211f47f",
+      "name": "04 - Is Reminder Eligible?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd9a7226-d564-4b8b-83a7-c20c1bba60f4",
+              "name": "emailSubject",
+              "value": "={{\n$json.reminderType === \"Regular\"\n? \"Training Progress Reminder\"\n: $json.reminderType === \"Due Soon\"\n? \"Training Deadline Approaching\"\n: $json.reminderType === \"Overdue\"\n? \"Training Overdue - Immediate Action Required\"\n: \"Training Reminder\"\n}}",
+              "type": "string"
+            },
+            {
+              "id": "d9f6ebd6-a066-4552-8181-9df1ec36bdec",
+              "name": "emailGreeting",
+              "value": "={{ \"Hello \" + ($json.properties[\"Partner Name\"].title?.[0]?.plain_text || \"Learner\") + \",\" }}",
+              "type": "string"
+            },
+            {
+              "id": "09b2b0ce-168c-46fb-9a7e-bf19e3268d8b",
+              "name": "emailMessage",
+              "value": "={{ $json.reminderType === \"Regular\"  ? \"This is a friendly reminder to continue your assigned training.\"  : $json.reminderType === \"Due Soon\"  ? \"Your training deadline is approaching. Please complete your remaining training as soon as possible.\"  : \"Your training has passed its deadline. Please complete it immediately or contact your training manager.\" }}",
+              "type": "string"
+            },
+            {
+              "id": "c70c2aae-c55b-4ec3-b060-b51a2df57cdf",
+              "name": "partnerName",
+              "value": "={{ $json.properties[\"Partner Name\"].title?.[0]?.plain_text ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "3ae1586e-71ca-4db9-b949-833557332d41",
+              "name": "partnerEmail",
+              "value": "={{ $json.properties[\"Email\"].email ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "b294024e-e6ac-4ba2-a9a0-1be01af6955b",
+              "name": "company",
+              "value": "={{ $json.properties[\"Company\"].rich_text?.[0]?.plain_text ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "7f5bbe7f-7c0f-4419-bd5a-86ceb398ca38",
+              "name": "trainingProgram",
+              "value": "={{ $json.properties[\"Training Program\"].select?.name ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "3fb1d294-110a-478d-89cc-d0e7633f8a68",
+              "name": "trainingStatus",
+              "value": "={{ $json.properties[\"Training Status\"].status?.name ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "ae4442c4-3cd6-4c7b-9a33-541709aa0b59",
+              "name": "needsManagerEscalation",
+              "value": "={{$json.needsManagerEscalation}}",
+              "type": "string"
+            },
+            {
+              "id": "278e857e-e13c-4fb3-82ed-87419a260ced",
+              "name": "reminderType",
+              "value": "={{$json.reminderType}}",
+              "type": "string"
+            },
+            {
+              "id": "ef94b86e-6c55-4f13-aa3e-ff9ed3dc73e3",
+              "name": "dueSoon",
+              "value": "={{ $json.properties[\"Due Soon\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d54beae6-a351-42e9-a31e-186898ceeda7",
+              "name": "managerEmail",
+              "value": "={{ $json.properties[\"Manager Email\"].email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1136,
+        -16
+      ],
+      "id": "1dd47bf0-eb67-4d5e-a23f-6704428090e9",
+      "name": "05 - Build Reminder Email"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('05 - Build Reminder Email').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Reminder Count|number",
+              "numberValue": "={{ $json.reminderCount + 1 }}"
+            },
+            {
+              "key": "Last Reminder Sent|date",
+              "date": "={{\nnew Date().toISOString().split(\"T\")[0]\n}}"
+            },
+            {
+              "key": "Needs Reminder|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1552,
+        -16
+      ],
+      "id": "0581ab11-e01c-4810-8e33-b14d49c93ca8",
+      "name": "07 - Update Reminder History",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.partnerEmail }}",
+        "subject": "={{ $json.emailSubject }}",
+        "message": "=<p>{{ $json.emailGreeting }}</p>  <p>{{ $json.emailMessage }}</p>  <p> Please log in to your training portal and continue your assigned learning activities. </p>  <br>  <p>Best regards,</p>  <p><strong>Training Team</strong></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        -16
+      ],
+      "id": "7aeefde0-3311-40af-a0b3-3ff5670f3507",
+      "name": "06 - Send a message (Gmail)",
+      "webhookId": "dc987e34-fea0-4c6c-9003-36640ee4b5fc",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e6da3afb-7706-485f-817c-a98d07d80c4d",
+              "leftValue": "={{ $json.trainingStatus }}",
+              "rightValue": "Overdue",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "ca7cd556-873c-4ea1-bb73-ec022c74efe7",
+              "leftValue": "={{ $json.needsManagerEscalation }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        784,
+        -384
+      ],
+      "id": "5db6cef5-b6f8-492e-a105-87ea1ef1f8c8",
+      "name": "08 - Should Escalate?"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json.managerEmail}}",
+        "subject": "=Training Escalation: {{ $json.partnerName }} has an overdue training",
+        "message": "=<p>Hello,</p>\n\n<p>This is an automated escalation from the Partner Training Operations System.</p>\n\n<p>The following learner has exceeded the training deadline and requires follow-up.</p>\n\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\">\n<tr>\n<td><b>Partner</b></td>\n<td>{{ $json.partnerName }}</td>\n</tr>\n\n<tr>\n<td><b>Company</b></td>\n<td>{{ $json.company }}</td>\n</tr>\n\n<tr>\n<td><b>Training Program</b></td>\n<td>{{ $json.trainingProgram }}</td>\n</tr>\n\n<tr>\n<td><b>Status</b></td>\n<td>{{ $json.trainingStatus }}</td>\n</tr>\n\n<tr>\n<td><b>Reminder Count</b></td>\n<td>{{ $json.reminderCount }}</td>\n</tr>\n\n</table>\n\n<br>\n\n<p>Please contact the learner and assist them in completing the required training.</p>\n\n<p>Thank you.</p>\n\n<hr>\n\n<p><i>This email was automatically generated by the Partner Training Operations Platform.</i></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        -400
+      ],
+      "id": "56880531-3e01-49cf-b284-339d01edefed",
+      "name": "09 - Notify Manager",
+      "webhookId": "c1efc201-1990-4bb2-97f2-f6ce8f53da98",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// ======================================\n// WF-03 - Reminder Eligibility Engine\n// ======================================\n\n// ---------- Configuration ----------\nconst CONFIG = {\n    reminderIntervalDays: 3,\n    maxReminderCount: 5\n};\n\n// ---------- Read Notion Properties ----------\n\nconst props = $json.properties;\n// Partner Information\nconst partnerName =\n    props[\"Partner Name\"]?.title?.[0]?.plain_text ?? \"\";\n\nconst partnerEmail =\n    props[\"Email\"]?.email ?? \"\";\n\nconst company =\n    props[\"Company\"]?.rich_text?.[0]?.plain_text ?? \"\";\n\nconst trainingProgram =\n    props[\"Training Program\"]?.select?.name ?? \"\";\n\n// Reminder Count\nconst reminderCount =\n    props[\"Reminder Count\"]?.number ?? 0;\n\n// Last Reminder Sent\nconst lastReminder =\n    props[\"Last Reminder Sent\"]?.date?.start ?? null;\n\n// Training Status\nconst trainingStatus =\n    props[\"Training Status\"]?.status?.name ?? \"\";\n\n// Needs Reminder Flag\nconst needsReminder =\n    props[\"Needs Reminder\"]?.checkbox ?? false;\n\n// Manager Escalation Flag\nconst needsManagerEscalation =\n    props[\"Needs Manager Escalation\"]?.checkbox ?? false;\n\n// Due Soon Flag\nconst dueSoon =\n    props[\"Due Soon\"]?.checkbox ?? false;\n\nconst managerMap = {\n\n    \"Commerce Platform\": \"sarah.ahmed@yourcompany.com\",\n\n    \"Product Basics\": \"sarah.ahmed@yourcompany.com\",\n\n    \"API Integration\": \"sarah.ahmed@yourcompany.com\",\n\n    \"Experimentation\": \"sarah.ahmed@yourcompany.com\",\n\n    \"CMS Training\": \"sarah.ahmed@yourcompany.com\"\n\n};\n\nconst managerEmail =\n    managerMap[trainingProgram] ?? \"\";\n// ======================================\n// Eligibility\n// ======================================\n\nlet eligible = false;\nlet reminderType = \"None\";\n\nif (needsReminder) {\n\n    if (reminderCount < CONFIG.maxReminderCount) {\n\n        if (!lastReminder) {\n\n            eligible = true;\n\n        } else {\n\n            const today = new Date();\n            today.setHours(0,0,0,0);\n\n            const last = new Date(lastReminder);\n            last.setHours(0,0,0,0);\n\n            const daysSinceLastReminder =\n                Math.floor(\n                    (today-last)/(1000*60*60*24)\n                );\n\n            if(daysSinceLastReminder >= CONFIG.reminderIntervalDays){\n\n                eligible = true;\n\n            }\n\n        }\n\n    }\n\n}\n\n// ======================================\n// Reminder Type\n// ======================================\n\nif(eligible){\n\n    if(trainingStatus===\"Overdue\"){\n\n        reminderType=\"Overdue\";\n\n    }\n\n    else if(dueSoon){\n\n        reminderType=\"Due Soon\";\n\n    }\n\n    else{\n\n        reminderType=\"Regular\";\n\n    }\n\n}\n\n// ======================================\n\nreturn {\n    json: {\n        ...$json,\n\n        reminderCount,\n        lastReminder,\n\n        eligible,\n        reminderType,\n\n        trainingStatus,\n        dueSoon,\n        needsReminder,\n        needsManagerEscalation,\n      partnerName,\n      partnerEmail,\n      company,\n      trainingProgram,\n      managerEmail\n\n    }\n\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "adb637c6-f1fc-4eef-ad35-78200aff79fb",
+      "name": "03 - Evaluate Reminder Eligibility"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('08 - Should Escalate?').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Needs Manager Escalation|checkbox"
+            },
+            {
+              "key": "Manager Notifed|checkbox",
+              "checkboxValue": true
+            },
+            {
+              "key": "Manager Escalation Date|date",
+              "date": "={{ $now }}"
+            },
+            {
+              "key": "Last Reminder Sent|date",
+              "date": "={{ $now }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        -400
+      ],
+      "id": "e6f8a722-b051-4b66-99e7-42194bbec4a0",
+      "name": "10 - Update the Database",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a8806cd0-3d1e-4ddc-85b6-d98aee48b103",
+              "name": "trainingStatus",
+              "value": "Overdue",
+              "type": "string"
+            },
+            {
+              "id": "2f1132d6-fd88-408b-962d-5ad613b4dddb",
+              "name": "eligible",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "8f65e6bd-9715-40d7-857c-61077f3b2597",
+              "name": "needsManagerEscalation",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "ea96f3d2-fb19-449d-9b00-855c2acf69a0",
+              "name": "reminderType",
+              "value": "Overdue",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        -272
+      ],
+      "id": "ebb2623a-7f05-4d3b-9458-ea493cffc2ba",
+      "name": "TEST MODE - Escalation Override"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 - Daily Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "02 - Get Learners Needing Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Get Learners Needing Reminder": {
+      "main": [
+        [
+          {
+            "node": "03 - Evaluate Reminder Eligibility",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Is Reminder Eligible?": {
+      "main": [
+        [
+          {
+            "node": "05 - Build Reminder Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "05 - Build Reminder Email": {
+      "main": [
+        [
+          {
+            "node": "06 - Send a message (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06 - Send a message (Gmail)": {
+      "main": [
+        [
+          {
+            "node": "07 - Update Reminder History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "07 - Update Reminder History": {
+      "main": [
+        []
+      ]
+    },
+    "08 - Should Escalate?": {
+      "main": [
+        [
+          {
+            "node": "09 - Notify Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Evaluate Reminder Eligibility": {
+      "main": [
+        [
+          {
+            "node": "04 - Is Reminder Eligible?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "08 - Should Escalate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "09 - Notify Manager": {
+      "main": [
+        [
+          {
+            "node": "10 - Update the Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TEST MODE - Escalation Override": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "215751a1-bc03-4663-b5b0-62576974dbc9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "M2E9AMjRw7GZpJHR",
+  "tags": []
+}

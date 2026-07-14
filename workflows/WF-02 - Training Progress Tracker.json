@@ -1,0 +1,377 @@
+{
+  "name": "WF-02 - Training Progress Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6cefa32c-1575-4311-9450-425beaa1cd19",
+      "name": "01 - Daily Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "3931a695-4233-8000-b629-e3571b1a51e7",
+          "mode": "list",
+          "cachedResultName": "Partner Training Operations",
+          "cachedResultUrl": "https://app.notion.com/p/3931a69542338000b629e3571b1a51e7"
+        },
+        "simple": false,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Training Status|status",
+              "condition": "does_not_equal",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Archived|checkbox",
+              "condition": "equals"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "43e89423-d4fd-4a01-b401-f925d7570a26",
+      "name": "02 - Get Active Learners",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// ======================================\n// WF-02 - Calculate Training Progress\n// Final Production Version\n// ======================================\n\n// ---------- Workflow Configuration ----------\nconst CONFIG = {\n    defaultTrainingDurationDays: 7,\n    reminderIntervalDays: 3,\n    dueSoonThresholdDays: 2,\n    maxReminderCount: 5,\n    managerEscalationEnabled: true\n};\n\n// ---------- Current Date ----------\nconst today = new Date();\ntoday.setHours(0, 0, 0, 0);\n\n// ---------- Read Notion Properties ----------\nconst trainingStart = $json.property_training_start_date;\nconst trainingDeadline = $json.property_training_deadline;\n\n// ---------- Default Outputs ----------\nlet daysElapsed = null;\nlet daysRemaining = null;\nlet progress = 0;\n\nlet calculatedStatus = \"Not started\";\n\nlet needsReminder = false;\nlet needsManagerEscalation = false;\nlet isDueSoon = false;\n\n// ======================================\n// Progress Calculation\n// ======================================\n\nif (trainingStart && trainingDeadline) {\n\n    const start = new Date(trainingStart.start ?? trainingStart);\n    start.setHours(0, 0, 0, 0);\n\n    const end = new Date(trainingDeadline.start ?? trainingDeadline);\n    end.setHours(0, 0, 0, 0);\n\n    // Total duration (minimum 1 day)\n    const totalDays = Math.max(\n        1,\n        Math.ceil((end - start) / (1000 * 60 * 60 * 24))\n    );\n\n    // Days elapsed\n    daysElapsed = Math.max(\n        0,\n        Math.floor((today - start) / (1000 * 60 * 60 * 24))\n    );\n\n    // Days remaining\n    daysRemaining = Math.ceil(\n        (end - today) / (1000 * 60 * 60 * 24)\n    );\n\n    // Progress %\n    progress = Math.round(\n        Math.max(\n            0,\n            Math.min(daysElapsed / totalDays, 1)\n        ) * 100\n    );\n\n    // ======================================\n    // Status Logic\n    // ======================================\n\n    if (today < start) {\n\n        calculatedStatus = \"Not started\";\n\n    }\n    else if (today >= start && today <= end) {\n\n        calculatedStatus = \"In progress\";\n\n        // Training is close to deadline\n        if (daysRemaining <= CONFIG.dueSoonThresholdDays) {\n            isDueSoon = true;\n        }\n\n        // Reminder interval reached\n        if (\n            daysElapsed > 0 &&\n            daysElapsed % CONFIG.reminderIntervalDays === 0\n        ) {\n            needsReminder = true;\n        }\n\n    }\n    else {\n\n        calculatedStatus = \"Overdue\";\n\n        progress = 100;\n\n        needsReminder = true;\n\n        needsManagerEscalation =\n            CONFIG.managerEscalationEnabled;\n\n    }\n\n}\n\n// ======================================\n// Return\n// ======================================\n\nreturn {\n    json: {\n        ...$json,\n\n        calculatedStatus,\n\n        daysElapsed,\n\n        daysRemaining,\n\n        progress,\n\n        needsReminder,\n\n        needsManagerEscalation,\n\n        isDueSoon\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        0
+      ],
+      "id": "1b60e53d-78d1-45f5-9f3e-36f72ca83983",
+      "name": "03 - Calculate Training Status"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Training Status|status",
+              "statusValue": "={{ $json.calculatedStatus }}"
+            },
+            {
+              "key": "Progress %|number",
+              "numberValue": "={{ $json.progress }}"
+            },
+            {
+              "key": "Needs Manager Escalation|checkbox"
+            },
+            {
+              "key": "Due Soon|checkbox"
+            },
+            {
+              "key": "Needs Reminder|checkbox"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1168,
+        0
+      ],
+      "id": "df920e5e-d18d-401f-94d9-f4f277475a4e",
+      "name": "04 - Update Training Status",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a4d12f13-05c4-433c-818c-22adb586206a",
+                    "leftValue": "={{ $json.calculatedStatus }}",
+                    "rightValue": "Not started",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "aa333966-ec12-4be2-ba17-cbc886d3ebef",
+                    "leftValue": "={{ $json.calculatedStatus }}",
+                    "rightValue": "In progress",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b8ee650a-573b-4d8b-a8fe-dec47359a0c1",
+                    "leftValue": "={{ $json.calculatedStatus }}",
+                    "rightValue": "Overdue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        -16
+      ],
+      "id": "66f61d60-aa50-4793-9a7a-2d5bf2023d7d",
+      "name": "05 - Route Training Status"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        976,
+        -16
+      ],
+      "id": "f5135f00-dded-47fa-8943-d0289d466a12",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "59e84c88-a857-45f1-9c3c-58c77241b721",
+              "name": "defaultTrainingDurationDays",
+              "value": 7,
+              "type": "number"
+            },
+            {
+              "id": "081a362c-d589-43c2-beae-ce77e0f7bee4",
+              "name": "reminderIntervalDays",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "8f7e4e79-d746-4408-af03-6633f1af1009",
+              "name": "dueSoonThresholdDays",
+              "value": 2,
+              "type": "number"
+            },
+            {
+              "id": "28302ce4-fc19-4d5d-a006-250ce9034534",
+              "name": "maxReminderCount",
+              "value": 5,
+              "type": "number"
+            },
+            {
+              "id": "349395bb-65f1-4842-b440-989908f5018d",
+              "name": "managerEscalationEnabled",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "66bcbab3-8ac7-47f7-b701-f4b18528fa49",
+      "name": "01.5 - Workflow Configuration"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 - Daily Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "01.5 - Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Get Active Learners": {
+      "main": [
+        [
+          {
+            "node": "03 - Calculate Training Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Calculate Training Status": {
+      "main": [
+        [
+          {
+            "node": "05 - Route Training Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Update Training Status": {
+      "main": [
+        []
+      ]
+    },
+    "05 - Route Training Status": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "04 - Update Training Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "01.5 - Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "02 - Get Active Learners",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5f997de6-497b-4727-be8c-c9043e60a4d4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "p3US4m58YvT31Xwp",
+  "tags": []
+}

@@ -1,0 +1,613 @@
+{
+  "name": "WF-04 - Certificate Issuance",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ff3eaa0d-c7cc-4db8-96f4-c97b96174614",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ======================================\n// WF-04 - Certificate Eligibility Engine\n// ======================================\n\nconst props = $json.properties;\n\n// -------------------------\n// Read Notion Properties\n// -------------------------\n\nconst partnerName =\n    props[\"Partner Name\"]?.title?.[0]?.plain_text ?? \"\";\n\nconst partnerEmail =\n    props[\"Email\"]?.email ?? \"\";\n\nconst company =\n    props[\"Company\"]?.rich_text?.[0]?.plain_text ?? \"\";\n\nconst trainingProgram =\n    props[\"Training Program\"]?.select?.name ?? \"\";\n\nconst trainingStatus =\n    props[\"Training Status\"]?.status?.name ?? \"\";\n\nconst certificateIssued =\n    props[\"Certificate Issued\"]?.checkbox ?? false;\n\nconst partnerId =\n    props[\"Execution ID\"]?.rich_text?.[0]?.plain_text ??\n    props[\"Execution ID\"]?.number ??\n    \"\";\n\n// -------------------------\n// Eligibility\n// -------------------------\n\nconst eligibleForCertificate =\n    trainingStatus === \"Completed\" &&\n    certificateIssued === false;\n\n// -------------------------\n// Certificate ID\n// -------------------------\n\nconst certificateId =\n    `CERT-${new Date().getFullYear()}-${partnerId}`;\n\n// -------------------------\n\nreturn {\n\n    json: {\n\n        ...$json,\n\n        partnerName,\n        partnerEmail,\n        company,\n        trainingProgram,\n\n        trainingStatus,\n\n        partnerId,\n\n        certificateIssued,\n\n        eligibleForCertificate,\n\n        certificateId,\n\n        issueDate: new Date().toLocaleDateString(\"en-GB\")\n\n    }\n\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        0
+      ],
+      "id": "834cacf0-0a15-422e-9eed-90d141a8fe16",
+      "name": "02 - Evaluate Certificate Eligibility"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "3931a695-4233-8000-b629-e3571b1a51e7",
+          "mode": "list",
+          "cachedResultName": "Partner Training Operations",
+          "cachedResultUrl": "https://app.notion.com/p/3931a69542338000b629e3571b1a51e7"
+        },
+        "limit": 1,
+        "simple": false,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Training Status|status",
+              "condition": "equals",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Certificate Issued|checkbox",
+              "condition": "equals"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        0
+      ],
+      "id": "59fb5f86-84ca-41b8-aad1-b2497ff1f543",
+      "name": "01 - Get Learners",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b80d3f31-aaac-41d8-99dd-0cbffade4c76",
+              "leftValue": "={{ $json.eligibleForCertificate }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        768,
+        0
+      ],
+      "id": "7f39fec8-4f95-43ff-a26f-fa71190b285b",
+      "name": "03 - Eligible For Certificate?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5f45796e-392f-4bae-939a-b181cdedd7ca",
+              "name": "trainingStatus",
+              "value": "Completed",
+              "type": "string"
+            },
+            {
+              "id": "6c94d4a8-906a-44b5-b454-db73009c235b",
+              "name": "certificateIssued",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "327dc54c-b2a5-4ba7-a459-d3a7b5efc89d",
+              "name": "eligibleForCertificate",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        -96
+      ],
+      "id": "7c028297-c869-4263-8399-2d03e1f22230",
+      "name": "TEST MODE"
+    },
+    {
+      "parameters": {
+        "operation": "replaceText",
+        "presentationId": "={{ $node[\"04 - Copy Google Slides Template\"].json.id }}",
+        "textUi": {
+          "textValues": [
+            {
+              "text": "{{PARTNER_NAME}}",
+              "replaceText": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.partnerName }}"
+            },
+            {
+              "text": "{{TRAINING_PROGRAM}}",
+              "replaceText": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.trainingProgram }}"
+            },
+            {
+              "text": "{{ISSUE_DATE}}",
+              "replaceText": "={{ new Date().toLocaleDateString(\"en-GB\") }}"
+            },
+            {
+              "text": "{{CERTIFICATE_ID}}",
+              "replaceText": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.certificateId }}"
+            },
+            {
+              "text": "{{PARTNER_ID}}",
+              "replaceText": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.partnerId }}"
+            },
+            {
+              "text": "{{COMPANY_NAME}}",
+              "replaceText": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.company }}"
+            },
+            {
+              "text": "{{SIGNATURE}}",
+              "replaceText": "SARAH AHMED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSlides",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "a750200f-1533-4408-8311-726358ec5fe1",
+      "name": "05 - Replace Placeholders",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "kNuWfYryjpW1SpPL",
+          "name": "Google Slides OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1KHlHdwGM-6HBay9gk4c_B_jvDItBLk2W5jRNJt8jqlY",
+          "mode": "id"
+        },
+        "name": "={{ $json.partnerName }} - {{ $json.trainingProgram }} Certificate",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ggsG1GME1H_53k4Rvv6wC1EFlZhptSEM",
+          "mode": "list",
+          "cachedResultName": "Generated Certificates/",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1ggsG1GME1H_53k4Rvv6wC1EFlZhptSEM"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "0624095a-1b74-42cd-8b73-a4042e7cb79a",
+      "name": "04 - Copy Google Slides Template",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        976,
+        -272
+      ],
+      "id": "fc8ca5ab-445f-4ace-b3c7-7fbc718e6c12",
+      "name": "03.5 - Merge Nodes to Get Other Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bed19ef6-deaa-460d-b902-e741213a5eb2",
+              "name": "=presentationId",
+              "value": "={{$json.id}}",
+              "type": "string"
+            },
+            {
+              "id": "39c6fdc7-42a8-4d29-9c2a-6ea8e182918b",
+              "name": "notionPageId",
+              "value": "={{$node[\"02 - Evaluate Certificate Eligibility\"].json.id}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        -240
+      ],
+      "id": "ca610637-3cb8-474b-814a-5fd73c0fc847",
+      "name": "06 - Differentiating Notion & Presentation ID"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.presentationId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1392,
+        -96
+      ],
+      "id": "38666d2d-8034-484e-91f9-3fc9a5d34c65",
+      "name": "07 - Download Certificate PDF",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.partnerName }} - Certificate.pdf",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ggsG1GME1H_53k4Rvv6wC1EFlZhptSEM",
+          "mode": "list",
+          "cachedResultName": "Generated Certificates/",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1ggsG1GME1H_53k4Rvv6wC1EFlZhptSEM"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1600,
+        -96
+      ],
+      "id": "5129fded-bb89-461d-8419-119b00b7ebf7",
+      "name": "08 - Upload Certificate PDF",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('06 - Differentiating Notion & Presentation ID').item.json.notionPageId }}",
+          "__regex": "^([0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12})"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Certificate Issued|checkbox",
+              "checkboxValue": true
+            },
+            {
+              "key": "Completion Date|date",
+              "date": "={{ new Date().toISOString() }}"
+            },
+            {
+              "key": "Certificate Link|url",
+              "urlValue": "={{ $json.webViewLink }}"
+            },
+            {
+              "key": "Overall Status|status",
+              "statusValue": "Completed"
+            },
+            {
+              "key": "Archived|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        -96
+      ],
+      "id": "c20a96e4-1be5-48ce-a7f8-95d42d108624",
+      "name": "09 - Update Notion Database Page",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('03.5 - Merge Nodes to Get Other Fields').item.json.partnerEmail }}",
+        "subject": "=Congratulations! Your Training Certificate",
+        "message": "=Dear {{ $('03.5 - Merge Nodes to Get Other Fields').item.json.partnerName }},  Congratulations on successfully completing the {{ $('03.5 - Merge Nodes to Get Other Fields').item.json.trainingProgram }} training.  Your certificate has been generated automatically.  You can download it using the link below.  Regards, Training Operations Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2016,
+        -96
+      ],
+      "id": "0a580915-26d5-4248-aa7b-6275f1e515eb",
+      "name": "10 - Notify The Partner/Candidate",
+      "webhookId": "c5df8dd9-f50a-4049-8edc-023bdaf10450",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $node[\"04 - Copy Google Slides Template\"].json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2224,
+        -96
+      ],
+      "id": "ec31b8b6-fae4-482c-bd38-3b1bbd17880d",
+      "name": "Delete a file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PojJbpfb7rBHgRAy",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "01 - Get Learners",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "01 - Get Learners": {
+      "main": [
+        [
+          {
+            "node": "02 - Evaluate Certificate Eligibility",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Evaluate Certificate Eligibility": {
+      "main": [
+        [
+          {
+            "node": "03 - Eligible For Certificate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TEST MODE": {
+      "main": [
+        []
+      ]
+    },
+    "03 - Eligible For Certificate?": {
+      "main": [
+        [
+          {
+            "node": "03.5 - Merge Nodes to Get Other Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "04 - Copy Google Slides Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Copy Google Slides Template": {
+      "main": [
+        [
+          {
+            "node": "03.5 - Merge Nodes to Get Other Fields",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "05 - Replace Placeholders": {
+      "main": [
+        [
+          {
+            "node": "07 - Download Certificate PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03.5 - Merge Nodes to Get Other Fields": {
+      "main": [
+        [
+          {
+            "node": "06 - Differentiating Notion & Presentation ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06 - Differentiating Notion & Presentation ID": {
+      "main": [
+        [
+          {
+            "node": "05 - Replace Placeholders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "07 - Download Certificate PDF": {
+      "main": [
+        [
+          {
+            "node": "08 - Upload Certificate PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "08 - Upload Certificate PDF": {
+      "main": [
+        [
+          {
+            "node": "09 - Update Notion Database Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "09 - Update Notion Database Page": {
+      "main": [
+        [
+          {
+            "node": "10 - Notify The Partner/Candidate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "10 - Notify The Partner/Candidate": {
+      "main": [
+        [
+          {
+            "node": "Delete a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "167662d6-e361-4fa2-ad32-b0a7dc036188",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "4OBFUrsM8uI8fpi0",
+  "tags": []
+}

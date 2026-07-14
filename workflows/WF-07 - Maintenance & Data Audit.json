@@ -1,0 +1,166 @@
+{
+  "name": "WF-07 - Maintenance & Data Audit",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0fd6cf0c-6268-4fe6-b839-c4346a75e55f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "3931a695-4233-8000-b629-e3571b1a51e7",
+          "mode": "list",
+          "cachedResultName": "Partner Training Operations",
+          "cachedResultUrl": "https://app.notion.com/p/3931a69542338000b629e3571b1a51e7"
+        },
+        "returnAll": true,
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1d7d9365-e942-45a1-b6a6-5ae87ee0cc2b",
+      "name": "01 - Get Training Records",
+      "credentials": {
+        "notionApi": {
+          "id": "CC57mwMkOeMpMuES",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst audit = {\n    total: items.length,\n    archived: 0,\n    active: 0,\n    certificatesIssued: 0,\n    missingCertificates: 0,\n    overdue: 0,\n    dueSoon: 0,\n    missingEmails: 0,\n    missingCompanies: 0,\n    missingManagers: 0,\n    missingDeadlines: 0,\n    reminderQueue: 0,\n    escalationQueue: 0\n};\n\nfor (const item of items) {\n\n    const p = item.json.properties;\n\n    if (p[\"Archived\"]?.checkbox)\n        audit.archived++;\n    else\n        audit.active++;\n\n    if (p[\"Certificate Issued\"]?.checkbox)\n        audit.certificatesIssued++;\n    else\n        audit.missingCertificates++;\n\n    if (p[\"Training Status\"]?.status?.name === \"Overdue\")\n        audit.overdue++;\n\n    if (p[\"Due Soon\"]?.checkbox)\n        audit.dueSoon++;\n\n    if (!p[\"Email\"]?.email)\n        audit.missingEmails++;\n\n    const company =\n        p[\"Company\"]?.rich_text?.[0]?.plain_text ?? \"\";\n\n    if (!company)\n        audit.missingCompanies++;\n\n    const manager =\n        p[\"Manager Email\"]?.email ?? \"\";\n\n    if (!manager)\n        audit.missingManagers++;\n\n    if (!p[\"Training Deadline\"]?.date)\n        audit.missingDeadlines++;\n\n    if (p[\"Needs Reminder\"]?.checkbox)\n        audit.reminderQueue++;\n\n    if (p[\"Needs Manager Escalation\"]?.checkbox)\n        audit.escalationQueue++;\n}\n\nreturn {\n    json: audit\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a40274bb-0fae-44d5-b2fa-1bf59ccd14ac",
+      "name": "02 - Perform Maintenance Audit"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const a = $json;\n\nconst html = `\n<html>\n\n<body style=\"font-family:Arial;background:#f4f4f4;padding:30px;\">\n\n<div style=\"\nbackground:white;\npadding:30px;\nborder-radius:10px;\nmax-width:900px;\nmargin:auto;\n\">\n\n<h1 style=\"color:#0b5394;\">\nWeekly System Maintenance Report\n</h1>\n\n<p>\nGenerated:\n<b>${new Date().toLocaleString()}</b>\n</p>\n\n<hr>\n\n<h2>Database Summary</h2>\n\n<table style=\"width:100%;border-collapse:collapse;\">\n\n<tr><td>Total Partners</td><td><b>${a.total}</b></td></tr>\n<tr><td>Active Partners</td><td><b>${a.active}</b></td></tr>\n<tr><td>Archived Partners</td><td><b>${a.archived}</b></td></tr>\n\n</table>\n\n<br>\n\n<h2>Training Status</h2>\n\n<table style=\"width:100%;border-collapse:collapse;\">\n\n<tr><td>Overdue Trainings</td><td><b>${a.overdue}</b></td></tr>\n<tr><td>Due Soon</td><td><b>${a.dueSoon}</b></td></tr>\n\n</table>\n\n<br>\n\n<h2>Certificates</h2>\n\n<table style=\"width:100%;border-collapse:collapse;\">\n\n<tr><td>Certificates Issued</td><td><b>${a.certificatesIssued}</b></td></tr>\n<tr><td>Certificates Pending</td><td><b>${a.missingCertificates}</b></td></tr>\n\n</table>\n\n<br>\n\n<h2>Data Quality Audit</h2>\n\n<table style=\"width:100%;border-collapse:collapse;\">\n\n<tr><td>Missing Emails</td><td><b>${a.missingEmails}</b></td></tr>\n<tr><td>Missing Company</td><td><b>${a.missingCompanies}</b></td></tr>\n<tr><td>Missing Manager Email</td><td><b>${a.missingManagers}</b></td></tr>\n<tr><td>Missing Training Deadline</td><td><b>${a.missingDeadlines}</b></td></tr>\n\n</table>\n\n<br>\n\n<h2>Queues</h2>\n\n<table style=\"width:100%;border-collapse:collapse;\">\n\n<tr><td>Reminder Queue</td><td><b>${a.reminderQueue}</b></td></tr>\n<tr><td>Escalation Queue</td><td><b>${a.escalationQueue}</b></td></tr>\n\n</table>\n\n<br>\n\n<hr>\n\n<p style=\"color:gray;\">\nPartner Training Management System\n<br>\nWeekly Automated Maintenance Report\n</p>\n\n</div>\n\n</body>\n\n</html>\n`;\n\nreturn {\n  json: {\n    html\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "0811c5bb-1f67-4333-8a0e-1ad2400ba15f",
+      "name": "03 - Generate Maintenance Report"
+    },
+    {
+      "parameters": {
+        "sendTo": "raltafur40@gmail.com",
+        "subject": "Weekly Partner Training Maintenance Report",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "7f650243-0414-4070-82cf-a8b6b89943aa",
+      "name": "04 - Send Maintenance Report",
+      "webhookId": "0f3765d4-eb29-4071-9e1b-768f872d5a84",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tQe7Zj6Z2kpPt3eT",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "01 - Get Training Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "01 - Get Training Records": {
+      "main": [
+        [
+          {
+            "node": "02 - Perform Maintenance Audit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Perform Maintenance Audit": {
+      "main": [
+        [
+          {
+            "node": "03 - Generate Maintenance Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Generate Maintenance Report": {
+      "main": [
+        [
+          {
+            "node": "04 - Send Maintenance Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "59391152-a083-45b5-8df6-0e90594c3e8c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8c6e50b1521bc7708b93e205b9de9fc7411f0ed4bd5eef65a36d5740d98ea20c"
+  },
+  "nodeGroups": [],
+  "id": "EMIBkuVxJuI8rsLL",
+  "tags": []
+}
