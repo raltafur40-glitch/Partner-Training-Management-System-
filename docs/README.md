@@ -168,7 +168,7 @@ The following screenshots demonstrate the end-to-end automation lifecycle of the
 
 This overview illustrates the complete automation ecosystem consisting of seven interconnected workflows responsible for partner onboarding, progress tracking, reminders, certificate generation, monitoring, reporting, and maintenance.
 
-![Overall Automation Ecosystem](../screenshots/workflows/1.%20Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
+![Overall Automation Ecosystem](./screenshots/workflows/1.%20Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
 
 ---
 
@@ -176,7 +176,7 @@ This overview illustrates the complete automation ecosystem consisting of seven 
 
 This workflow automatically verifies learner completion, generates personalized certificates using Google Slides, stores them in Google Drive, delivers them via Gmail, and updates the Notion database.
 
-![Certificate Workflow](../screenshots/workflows/2.%20Automated%20certificate%20generation,%20storage%20and%20email%20delivery%20workflow.png)
+![Certificate Workflow](./screenshots/workflows/2.%20Automated%20certificate%20generation,%20storage%20and%20email%20delivery%20workflow.png)
 
 ---
 
@@ -184,7 +184,7 @@ This workflow automatically verifies learner completion, generates personalized 
 
 The centralized Notion database serves as the operational backbone of the platform, maintaining learner information, training progress, reminders, certificates, and workflow execution status.
 
-![Notion Database](../screenshots/notion/3.%20Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
+![Notion Database](./screenshots/notion/3.%20Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
 
 ---
 
@@ -192,7 +192,7 @@ The centralized Notion database serves as the operational backbone of the platfo
 
 A personalized certificate is automatically created upon successful completion of the training program using a predefined Google Slides template.
 
-![Certificate](../screenshots/certificates/4.%20Automatically%20generated%20personalized%20completion%20certificate.png)
+![Certificate](./screenshots/certificates/4.%20Automatically%20generated%20personalized%20completion%20certificate.png)
 
 ---
 
@@ -200,7 +200,7 @@ A personalized certificate is automatically created upon successful completion o
 
 The system proactively notifies learners who are approaching their training deadlines, helping improve completion rates and reduce manual follow-ups.
 
-![Reminder Email](../screenshots/emails/5.%20Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
+![Reminder Email](./screenshots/emails/5.%20Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
 
 ---
 
@@ -208,7 +208,7 @@ The system proactively notifies learners who are approaching their training dead
 
 An executive KPI dashboard is periodically generated and emailed to administrators, providing visibility into learner progress, completion rates, overdue training, reminders, and overall operational performance.
 
-![Dashboard Email](../screenshots/emails/6.%20Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
+![Dashboard Email](./screenshots/emails/6.%20Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
 
 ## ⚙️ Installation
 
