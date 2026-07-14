@@ -110,8 +110,86 @@ partner-training-management-system/
 └── LICENSE
 ```
 
-✅ Technology Stack
-✅ Workflow Overview
-✅ Project Structure
+---
+
+## 🏗️ System Architecture
+
+The Partner Training Management System (PTMS) follows a modular workflow architecture where each workflow is responsible for a specific business function.
+
+The workflows communicate through a centralized Notion database, enabling seamless data synchronization and reducing workflow dependencies.
+
+**High-Level Flow**
+
+Partner → Onboarding → Training Tracking → Reminder Engine → Certificate Generation → Reporting → Maintenance
+
+> 📌 *An architecture diagram is available in the `/diagrams` folder.*
+
+---
+
+## 📈 Business Impact
+
+This project demonstrates how workflow automation can improve operational efficiency by:
+
+- Reducing repetitive administrative tasks
+- Standardizing partner onboarding processes
+- Improving visibility into learner progress
+- Automating reminder and escalation workflows
+- Eliminating manual certificate generation
+- Providing real-time operational reporting
+- Supporting scalable partner training management
+
+The solution was designed with scalability and maintainability in mind, allowing additional workflows and integrations to be added with minimal changes.
+
+---
+
+## 📷 Screenshots
+
+| Feature | Preview |
+|----------|---------|
+| Workflow Overview | Coming Soon |
+| Notion Database | Coming Soon |
+| Certificate Generation | Coming Soon |
+| Analytics Dashboard | Coming Soon |
+
+---
+
+## ⚙️ Installation
+
+1. Clone this repository.
+2. Import the workflow JSON files into n8n.
+3. Configure credentials for:
+   - Notion
+   - Gmail
+   - Google Drive
+   - Google Slides
+4. Create the required Notion database.
+5. Update node credentials and environment settings.
+6. Activate the workflows.
+
+---
+
+## 🚀 Future Improvements
+
+Potential enhancements include:
+
+- Microsoft Teams and Slack notifications
+- Power BI or Looker Studio integration
+- AI-powered learner support
+- Advanced analytics dashboard
+- Multi-language email templates
+- LMS integration
+- Role-based access management
+
+---
+
+## 👨‍💻 Author
+
+**Md Altafur Rahman**
+
+Marketing Graduate | North South University
+
+Interested in Marketing, Business Operations, Digital Transformation, and Workflow Automation.
+
+Feel free to connect or reach out through LinkedIn.
 
 ---
