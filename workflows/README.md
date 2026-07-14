@@ -158,6 +158,58 @@ The solution was designed with scalability and maintainability in mind, allowing
 
 ---
 
+# 📸 System Walkthrough
+
+The following screenshots demonstrate the end-to-end automation lifecycle of the Partner Training Management System (PTMS), from workflow orchestration and centralized data management to automated communications and certificate issuance.
+
+---
+
+## 1. Overall Automation Ecosystem (Seven Modular Enterprise Workflows)
+
+This overview illustrates the complete automation ecosystem consisting of seven interconnected workflows responsible for partner onboarding, progress tracking, reminders, certificate generation, monitoring, reporting, and maintenance.
+
+![Overall Automation Ecosystem](../screenshots/workflows/1.%20Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
+
+---
+
+## 2. Automated Certificate Generation, Storage & Email Delivery Workflow
+
+This workflow automatically verifies learner completion, generates personalized certificates using Google Slides, stores them in Google Drive, delivers them via Gmail, and updates the Notion database.
+
+![Certificate Workflow](../screenshots/workflows/2.%20Automated%20certificate%20generation,%20storage%20and%20email%20delivery%20workflow.png)
+
+---
+
+## 3. Centralized Notion Database (Single Source of Truth)
+
+The centralized Notion database serves as the operational backbone of the platform, maintaining learner information, training progress, reminders, certificates, and workflow execution status.
+
+![Notion Database](../screenshots/notion/3.%20Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
+
+---
+
+## 4. Automatically Generated Personalized Completion Certificate
+
+A personalized certificate is automatically created upon successful completion of the training program using a predefined Google Slides template.
+
+![Certificate](../screenshots/certificates/4.%20Automatically%20generated%20personalized%20completion%20certificate.png)
+
+---
+
+## 5. Automated Reminder Email for Approaching Training Deadlines
+
+The system proactively notifies learners who are approaching their training deadlines, helping improve completion rates and reduce manual follow-ups.
+
+![Reminder Email](../screenshots/emails/5.%20Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
+
+---
+
+## 6. Automated KPI Dashboard Delivered to Administrators
+
+An executive KPI dashboard is periodically generated and emailed to administrators, providing visibility into learner progress, completion rates, overdue training, reminders, and overall operational performance.
+
+![Dashboard Email](../screenshots/emails/6.%20Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
+
 ## ⚙️ Installation
 
 1. Clone this repository.
