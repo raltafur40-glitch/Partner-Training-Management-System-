@@ -126,6 +126,22 @@ Partner → Onboarding → Training Tracking → Reminder Engine → Certificate
 
 ---
 
+## 🏗 Enterprise Business Architecture
+
+![Business Architecture](diagrams/01-business-architecture.png)
+
+---
+
+## ⚙ Workflow Interaction Architecture
+
+![Workflow Architecture](diagrams/02-workflow-interaction-architecture.png)
+
+---
+
+## 🗄 Database Schema
+
+![Database Schema](diagrams/03-notion-database-schema.png)
+
 ## 📈 Business Impact
 
 This project demonstrates how workflow automation can improve operational efficiency by:
@@ -139,17 +155,6 @@ This project demonstrates how workflow automation can improve operational effici
 - Supporting scalable partner training management
 
 The solution was designed with scalability and maintainability in mind, allowing additional workflows and integrations to be added with minimal changes.
-
----
-
-## 📷 Screenshots
-
-| Feature | Preview |
-|----------|---------|
-| Workflow Overview | Coming Soon |
-| Notion Database | Coming Soon |
-| Certificate Generation | Coming Soon |
-| Analytics Dashboard | Coming Soon |
 
 ---
 
