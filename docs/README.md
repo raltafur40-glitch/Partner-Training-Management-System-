@@ -168,47 +168,40 @@ The following screenshots demonstrate the complete end-to-end automation lifecyc
 
 This overview presents the complete automation ecosystem built in **n8n**, consisting of seven modular workflows that collectively manage partner onboarding, training progress, reminders, certificate issuance, reporting, monitoring, and system maintenance.
 
-![Overall automation ecosystem consisting of seven modular enterprise workflows](screenshots/workflows/1.%20Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
+![Overall automation ecosystem consisting of seven modular enterprise workflows](screenshots/workflows/Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
+(screenshots/workflows/Automated%20certificate%20generation%2C%20storage%20and%20email%20delivery%20workflow.png)
 
 ---
 
-## 2. Automated Certificate Generation, Storage and Email Delivery Workflow
-
-This workflow automatically verifies learner completion, generates a personalized certificate using **Google Slides**, stores it in **Google Drive**, delivers it via **Gmail**, and updates the learner's record in the centralized **Notion** database.
-
-![Automated certificate generation, storage and email delivery workflow](screenshots/workflows/2.%20Automated%20certificate%20generation,%20storage%20and%20email%20delivery%20workflow.png)
-
----
-
-## 3. Centralized Notion Database Serving as the Single Source of Truth
+## 2. Centralized Notion Database Serving as the Single Source of Truth
 
 The centralized Notion database acts as the operational backbone of the platform by maintaining learner profiles, training information, workflow status, reminders, certificates, and reporting data used across all automation workflows.
 
-![Centralized Notion database serving as the single source of truth](screenshots/notion/3.%20Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
+![Centralized Notion database serving as the single source of truth](screenshots/notion/Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
 
 ---
 
-## 4. Automatically Generated Personalized Completion Certificate
+## 3. Automatically Generated Personalized Completion Certificate
 
 Upon successful completion of the assigned training program, the system automatically generates a personalized certificate containing learner-specific information and delivers it to the participant without manual intervention.
 
-![Automatically generated personalized completion certificate](screenshots/certificates/4.%20Automatically%20generated%20personalized%20completion%20certificate.png)
+![Automatically generated personalized completion certificate](screenshots/certificates/Automatically%20generated%20personalized%20completion%20certificate.png)
 
 ---
 
-## 5. Automated Reminder Email Sent to Learners Approaching Deadlines
+## 4. Automated Reminder Email Sent to Learners Approaching Deadlines
 
 Learners approaching their training deadline automatically receive reminder emails, helping improve completion rates while reducing manual follow-up by administrators.
 
-![Automated reminder email sent to learners approaching deadlines](screenshots/emails/5.%20Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
+![Automated reminder email sent to learners approaching deadlines](screenshots/emails/Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
 
 ---
 
-## 6. Automated KPI Dashboard Delivered to Administrators
+## 5. Automated KPI Dashboard Delivered to Administrators
 
 The platform periodically generates and emails an executive KPI dashboard summarizing learner progress, completion rates, overdue training, reminder statistics, and overall operational performance for administrative decision-making.
 
-![Automated KPI dashboard delivered to administrators](screenshots/emails/6.%20Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
+![Automated KPI dashboard delivered to administrators](screenshots/emails/Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
 
 ## ⚙️ Installation
 
