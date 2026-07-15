@@ -105,7 +105,6 @@ partner-training-management-system/
 ├── diagrams/
 ├── docs/
 ├── demo/
-├── assets/
 ├── README.md
 └── LICENSE
 ```
