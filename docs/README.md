@@ -128,19 +128,19 @@ Partner → Onboarding → Training Tracking → Reminder Engine → Certificate
 
 ## 🏗 Enterprise Business Architecture
 
-![Business Architecture](diagrams/01-business-architecture.png)
+![Business Architecture](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/edit/main/docs/README.md)
 
 ---
 
 ## ⚙ Workflow Interaction Architecture
 
-![Workflow Architecture](diagrams/02-workflow-interaction-architecture.png)
+![Workflow Architecture](https://raw.githubusercontent.com/raltafur40-glitch/Partner-Training-Management-System-/main/diagrams/02-workflow-interaction-architecture.png)
 
 ---
 
 ## 🗄 Database Schema
 
-![Database Schema](diagrams/03-notion-database-schema.png)
+![Database Schema](https://raw.githubusercontent.com/raltafur40-glitch/Partner-Training-Management-System-/main/diagrams/03-notion-database-schema.png)
 
 ---
 
@@ -164,37 +164,37 @@ The solution was designed with scalability and maintainability in mind, allowing
 
 ## 1. Overall Automation Ecosystem Consisting of Seven Modular Enterprise Workflows
 
-![Overall Workflow](screenshots/workflows/overall-automation-ecosystem.png)
+![Overall Workflow](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/workflows/overall-automation-ecosystem.png)
 
 ---
 
 ## 2. Automated Certificate Generation, Storage and Email Delivery Workflow
 
-![Certificate Workflow](screenshots/workflows/certificate-generation-workflow.png)
+![Certificate Generation Workflow](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/workflows/certificate-generation-workflow.png)
 
 ---
 
 ## 3. Centralized Notion Database Serving as the Single Source of Truth
 
-![Notion Database](screenshots/notion/centralized-notion-database.png)
+![Notion Database](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/notion/centralized-notion-database.png)
 
 ---
 
 ## 4. Automatically Generated Personalized Completion Certificate
 
-![Certificate](screenshots/certificates/generated-certificate.png)
+![Certificate](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/certificates/generated-certificate.png)
 
 ---
 
 ## 5. Automated Reminder Email Sent to Learners Approaching Deadlines
 
-![Reminder Email](screenshots/emails/reminder-email.png)
+![Reminder Email](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/emails/reminder-email.png)
 
 ---
 
 ## 6. Automated KPI Dashboard Delivered to Administrators
 
-![Dashboard](screenshots/emails/kpi-dashboard-email.png)
+![Dashboard](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/screenshots/emails/kpi-dashboard-email.png)
 
 ---
 ## ⚙️ Installation
