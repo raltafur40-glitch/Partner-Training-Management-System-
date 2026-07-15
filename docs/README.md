@@ -128,7 +128,7 @@ Partner → Onboarding → Training Tracking → Reminder Engine → Certificate
 
 ## 🏗 Enterprise Business Architecture
 
-![Business Architecture](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/edit/main/docs/README.md)
+![Business Architecture](https://github.com/raltafur40-glitch/Partner-Training-Management-System-/blob/main/diagrams/01-business-architecture.png)
 
 ---
 
