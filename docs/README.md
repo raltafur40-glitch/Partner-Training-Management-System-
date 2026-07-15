@@ -128,19 +128,21 @@ Partner → Onboarding → Training Tracking → Reminder Engine → Certificate
 
 ## 🏗 Enterprise Business Architecture
 
-![Business Architecture](diagrams/01-business-architecture.png)
+![Business Architecture](diagrams/1%20-%20Enterprise%20Business%20Architecture.png)
 
 ---
 
 ## ⚙ Workflow Interaction Architecture
 
-![Workflow Architecture](diagrams/02-workflow-interaction-architecture.png)
+![Workflow Architecture](diagrams/2%20-%20Workflow%20Interaction%20Architecture.png)
 
 ---
 
 ## 🗄 Database Schema
 
-![Database Schema](diagrams/03-notion-database-schema.png)
+![Database Schema](diagrams/3%20-%20Notion%20Database%20Schema%20Architecture.png)
+
+---
 
 ## 📈 Business Impact
 
@@ -160,39 +162,57 @@ The solution was designed with scalability and maintainability in mind, allowing
 
 # 📸 System Walkthrough
 
-## 1. Overall automation ecosystem consisting of seven modular enterprise workflows
-
-![Overall Workflow](screenshots/workflows/overall-automation-ecosystem.png)
+The following screenshots demonstrate the complete automation lifecycle of the Partner Training Management System (PTMS), highlighting how seven interconnected workflows automate partner onboarding, training management, notifications, certificate issuance, reporting, and operational monitoring.
 
 ---
 
-## 2. Automated certificate generation, storage and email delivery workflow
+## 1. Overall Automation Ecosystem Consisting of Seven Modular Enterprise Workflows
 
-![Certificate Workflow](screenshots/workflows/certificate-generation-workflow.png)
+This overview presents the complete enterprise automation ecosystem built in n8n. Seven independent yet interconnected workflows collaborate to automate the entire partner training lifecycle from onboarding through reporting and maintenance.
 
----
-
-## 3. Centralized Notion database serving as the single source of truth
-
-![Notion Database](screenshots/notion/centralized-notion-database.png)
+![Overall Automation Ecosystem](screenshots/workflows/Overall%20automation%20ecosystem%20consisting%20of%20seven%20modular%20enterprise%20workflows.png)
 
 ---
 
-## 4. Automatically generated personalized completion certificate
+## 2. Automated Certificate Generation, Storage and Email Delivery Workflow
 
-![Certificate](screenshots/certificates/generated-certificate.png)
+This workflow automatically verifies learner completion, generates personalized certificates using Google Slides, stores the generated document in Google Drive, distributes it via Gmail, and updates learner records within the centralized Notion database.
 
----
-
-## 5. Automated reminder email sent to learners approaching deadlines
-
-![Reminder Email](screenshots/emails/reminder-email.png)
+![Certificate Workflow](screenshots/workflows/Automated%20certificate%20generation,%20storage%20and%20email%20delivery%20workflow.png)
 
 ---
 
-## 6. Automated KPI dashboard delivered to administrators
+## 3. Centralized Notion Database Serving as the Single Source of Truth
 
-![Dashboard](screenshots/emails/kpi-dashboard-email.png)
+The centralized Notion workspace acts as the operational backbone of PTMS, maintaining learner profiles, partner information, workflow status, certificates, reminders, and reporting data across the entire automation platform.
+
+![Centralized Notion Database](screenshots/notion/Centralized%20Notion%20database%20serving%20as%20the%20single%20source%20of%20truth.png)
+
+---
+
+## 4. Automatically Generated Personalized Completion Certificate
+
+Upon successful completion of the assigned training program, PTMS automatically generates a personalized completion certificate using a predefined Google Slides template without requiring any manual intervention.
+
+![Generated Certificate](screenshots/certificates/Automatically%20generated%20personalized%20completion%20certificate.png)
+
+---
+
+## 5. Automated Reminder Email Sent to Learners Approaching Deadlines
+
+Learners approaching their training deadlines automatically receive reminder emails, helping increase completion rates while minimizing manual administrative follow-up.
+
+![Reminder Email](screenshots/emails/Automated%20reminder%20email%20sent%20to%20learners%20approaching%20deadlines.png)
+
+---
+
+## 6. Automated KPI Dashboard Delivered to Administrators
+
+PTMS periodically generates and delivers an executive KPI dashboard summarizing learner progress, completion rates, overdue training, reminders, and operational performance metrics for administrators.
+
+![KPI Dashboard](screenshots/emails/Automated%20KPI%20dashboard%20delivered%20to%20administrators.png)
+
+---
 ## ⚙️ Installation
 
 1. Clone this repository.
@@ -222,15 +242,26 @@ Potential enhancements include:
 
 ---
 
-## 👨‍💻 Author
+## 📄 License
 
-**Md Altafur Rahman**
-
-Marketing Graduate | North South University
-
-Interested in Marketing, Business Operations, Digital Transformation, and Workflow Automation.
-
-Feel free to connect or reach out through LinkedIn.
+This project is released under the MIT License. See the LICENSE file for more information.
 
 ---
 
+## 👨‍💻 Author
+
+### Md Altafur Rahman
+
+Marketing Graduate | North South University
+
+Interested in:
+
+- Workflow Automation
+- Business Operations
+- Digital Transformation
+- Marketing Technology
+- Business Process Optimization
+
+Feel free to connect with me on LinkedIn or explore the repository for implementation details.
+
+---
